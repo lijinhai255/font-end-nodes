@@ -18,8 +18,12 @@ const nav = [
         text: '环境搭建',
         items: [
           {
+            text: 'React',
+            link: '/basic/React/'
+          },
+          {
             text: 'Vue',
-            link: '/basic/vue/'
+            link: '/basic/Vue/'
           },
           {
             text: 'Node.js',
@@ -168,131 +172,131 @@ const nav = [
           {
             text: '分类笔试题',
             link: '/interview/types/'
-          },
-          {
-            text: '笔记技巧',
-            link: '/interview/techs/'
           }
-        ]
-      },
-      {
-        text: '面试技巧',
-        items: [
-          {
-            text: '技术面',
-            link: '/interview/basic/'
-          },
-          {
-            text: '项目面',
-            link: '/interview/projects/'
-          },
-          {
-            text: 'BOSS面',
-            link: '/interview/boss/'
-          },
-          {
-            text: 'HR面',
-            link: '/interview/hr/'
-          }
-        ]
-      },
-      {
-        text: '简历',
-        items: [
-          {
-            text: '写好简历',
-            link: '/interview/writor/'
-          },
-          {
-            text: '简历模板',
-            link: '/interview/templates/'
-          }
-        ]
-      },
-      {
-        text: '公司行业',
-        items: [
-          {
-            text: '选择公司',
-            link: '/interview/company/'
-          },
-          {
-            text: '行业洞悉',
-            link: '/interview/industry/'
-          }
+          // {
+          //   text: '笔记技巧',
+          //   link: '/interview/techs/'
+          // }
         ]
       }
-    ]
-  },
-  {
-    text: '关于',
-    items: [
-      {
-        text: '线上课程',
-        items: [
-          {
-            text: '大前端课程2021版',
-            link: 'https://class.imooc.com/sale/webfullstack2021'
-          },
-          {
-            text: 'Vue3.0+Vite开发',
-            link: 'https://www.imooc.com/learn/1245'
-          },
-          {
-            text: 'Vue2.x核心技术',
-            link: 'https://www.imooc.com/learn/1091'
-          }
-        ]
-      },
-      {
-        text: '日志',
-        items: [
-          {
-            text: '更新日志',
-            link: '/course/update-logs/'
-          },
-          {
-            text: 'github源码',
-            link: 'https://github.com/toimc-team/front-end-notes'
-          },
-          {
-            text: 'gitee源码',
-            link: 'https://gitee.com/toimc/front-end-notes'
-          }
-        ]
-      },
-      {
-        text: '参与贡献',
-        items: [
-          {
-            text: '贡献指南',
-            link: '/course/notes/'
-          },
-          {
-            text: '项目说明',
-            link: '/course/vuepress/'
-          }
-        ]
-      },
-      {
-        text: '社交媒介',
-        items: [
-          {
-            text: '官方博客',
-            link: 'https://www.toimc.com'
-          },
-          {
-            text: '微博',
-            link: 'https://weibo.com/wayearn'
-          },
-          {
-            text: '团队介绍',
-            link: '/about/'
-          }
-        ]
-      }
+      // {
+      //   text: '面试技巧',
+      //   items: [
+      //     {
+      //       text: '技术面',
+      //       link: '/interview/basic/'
+      //     },
+      //     {
+      //       text: '项目面',
+      //       link: '/interview/projects/'
+      //     },
+      //     {
+      //       text: 'BOSS面',
+      //       link: '/interview/boss/'
+      //     },
+      //     {
+      //       text: 'HR面',
+      //       link: '/interview/hr/'
+      //     }
+      //   ]
+      // },
+      // {
+      //   text: '简历',
+      //   items: [
+      //     {
+      //       text: '写好简历',
+      //       link: '/interview/writor/'
+      //     },
+      //     {
+      //       text: '简历模板',
+      //       link: '/interview/templates/'
+      //     }
+      //   ]
+      // },
+      // {
+      //   text: '公司行业',
+      //   items: [
+      //     {
+      //       text: '选择公司',
+      //       link: '/interview/company/'
+      //     },
+      //     {
+      //       text: '行业洞悉',
+      //       link: '/interview/industry/'
+      //     }
+      //   ]
+      // }
     ]
   }
+  // {
+  //   text: '关于',
+  //   items: [
+  //     {
+  //       text: '线上课程',
+  //       items: [
+  //         {
+  //           text: '大前端课程2021版',
+  //           link: 'https://class.imooc.com/sale/webfullstack2021'
+  //         },
+  //         {
+  //           text: 'Vue3.0+Vite开发',
+  //           link: 'https://www.imooc.com/learn/1245'
+  //         },
+  //         {
+  //           text: 'Vue2.x核心技术',
+  //           link: 'https://www.imooc.com/learn/1091'
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       text: '日志',
+  //       items: [
+  //         {
+  //           text: '更新日志',
+  //           link: '/course/update-logs/'
+  //         },
+  //         {
+  //           text: 'github源码',
+  //           link: 'https://github.com/toimc-team/front-end-notes'
+  //         },
+  //         {
+  //           text: 'gitee源码',
+  //           link: 'https://gitee.com/toimc/front-end-notes'
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       text: '参与贡献',
+  //       items: [
+  //         {
+  //           text: '贡献指南',
+  //           link: '/course/notes/'
+  //         },
+  //         {
+  //           text: '项目说明',
+  //           link: '/course/vuepress/'
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       text: '社交媒介',
+  //       items: [
+  //         {
+  //           text: '官方博客',
+  //           link: 'https://www.toimc.com'
+  //         },
+  //         {
+  //           text: '微博',
+  //           link: 'https://weibo.com/wayearn'
+  //         },
+  //         {
+  //           text: '团队介绍',
+  //           link: '/about/'
+  //         }
+  //       ]
+  //     }
+  //   ]
+  // }
 ]
 
 const sidebar = {
@@ -375,6 +379,13 @@ const sidebar = {
       children: genSidebarConfig('about', { ...siderBarOptions, hasSub: false })
     }
   ],
+  // '/interview/': [
+  //   {
+  //     title: 'Vue',
+  //     collapsable: false,
+  //     children: genSidebarConfig('Vue', siderBarOptions)
+  //   }
+  // ],
   '/': [
     {
       title: '首页',
