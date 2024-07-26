@@ -394,7 +394,7 @@ module.exports = {
       }
     }
   },
-  base: '/',
+  base: '/font-end-nodes/',
   /**
    * Ref：https://v1.vuepress.vuejs.org/config/#title
    */
