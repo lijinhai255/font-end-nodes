@@ -1,4 +1,4 @@
-name: 'vuePress 个人博客搭建'
+name: Build Vuepress and Sync Gitee
 on:
   push:
     branches: [master]
@@ -10,7 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
@@ -25,17 +24,18 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-
       - name: Install Dependencies
-        run: npm ci
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm i
 
       # Vuepress Build.
       - name: Generates Pages
-        run: npm run build
-
-      - name: Deploy to GitHub Pages 🚀
+        run: |
+          npm run build
+      - name: Deploy Github Pages🚀
         uses: JamesIves/github-pages-deploy-action@4.1.0
         with:
-          repository-name: lijinhai255.github.io
+          repository-name: lijinhai255.github.io # The branch the action should deploy to.
           branch: master
-          folder: ./src/.vuepress/dist
+          folder: ./src/.vuepress/dist # The folder the action should deploy.
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
