@@ -1,4 +1,4 @@
-name: Build Vuepress and Sync Gitee
+name: 'vuePress 个人博客搭建'
 on:
   push:
     branches: [master]
