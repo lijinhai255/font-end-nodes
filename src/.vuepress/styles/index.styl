@@ -1,0 +1,29 @@
+/**
+ * Custom Styles here.
+ *
+ * ref：https://v1.vuepress.vuejs.org/config/#index-styl
+ */
+
+.home .hero img
+  max-width 450px!important
+
+@media screen and (max-width:1200px){
+  div.theme-default-content:not(.custom) , .theme-custom-content{
+    padding: 0 1.5rem !important;
+    max-width: 100%;
+  }
+}
+
+@media screen and (min-width:1200px){
+  div.theme-default-content:not(.custom), .theme-custom-content {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+}
+
+.theme-default-content
+  padding-bottom: 0 !important;
+
+.theme-custom-content
+  padding: 0 2.5rem;
+  
