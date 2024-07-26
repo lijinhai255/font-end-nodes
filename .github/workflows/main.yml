@@ -36,7 +36,7 @@ jobs:
       - name: Deploy Github Pages🚀
         uses: JamesIves/github-pages-deploy-action@4.1.0
         with:
-          repository-name: toimc-team/notes-page # The branch the action should deploy to.
+          repository-name: lijinhai255.github.io # The branch the action should deploy to.
           branch: master
           folder: ./src/.vuepress/dist # The folder the action should deploy.
           ssh-key: ${{ secrets.DEPLOY_KEY }}
