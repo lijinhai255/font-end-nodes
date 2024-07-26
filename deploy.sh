@@ -20,7 +20,7 @@ git commit -m 'update commit'
 
 # # 部署到 github
 # git remote add github git@toimc:toimc/notes-page.git
-git push -f git@github.com:lijinhai255/lijinhai255.github.io.git
+# git push -f git@github.com:lijinhai255/lijinhai255.github.io.git
 
 # git remote add gitee git@gitee.com:toimc/notes-page.git
 # git push -f gitee master

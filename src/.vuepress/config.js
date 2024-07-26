@@ -394,7 +394,7 @@ module.exports = {
       }
     }
   },
-  base: isDev ? '/' : '/notes-page/',
+  base: '/',
   /**
    * Ref：https://v1.vuepress.vuejs.org/config/#title
    */
