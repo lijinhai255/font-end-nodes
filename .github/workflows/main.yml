@@ -39,4 +39,3 @@ jobs:
           repository-name: lijinhai255.github.io
           branch: master
           folder: ./src/.vuepress/dist
-          ssh-key: ${{ secrets.DEPLOY_KEY }}
