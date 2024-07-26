@@ -1,11 +1,4 @@
-# 大前端电子书
-
-本项目基于 VuePress 构建，主要围绕[大前端课程](https://class.imooc.com/sale/webfullstack)记录学习笔记，在此基础上拓展延伸前端前沿技术解读、面试、前端基础知识强化等内容，前端之路漫漫，希望我们的内容能对你有所帮助。
-
-[大前端电子书在线阅读地址](https://toimc-team.github.io/notes-page/)
-
-电子书内容分类，持续更新中......
-
+# 前端笔记
 ```
 - 基础强化
   - 环境搭建
@@ -135,30 +128,4 @@ $ npm run dev
     └── course         // 课程
     └── devops         // DevOps
 ```
-
-
-
-## 贡献指南
-
-本项目持续开源更新，如发现项目有问题，欢迎 issue，如果你想要参与项目贡献，欢迎 PR，相关贡献方法及规则，请参考[贡献指南](https://toimc-team.github.io/notes-page/course/notes/)
-
-## 贡献者名单
-
-本项目的发展要归功于所有贡献者，感谢！[贡献者名单](https://github.com/toimc-team/front-end-notes/graphs/contributors)
-
-## 版本信息
-
-电子书更新日志，请移步[更新记录](https://toimc.gitee.io/notes-page/course/update-logs/)
-
-## 交流
-
-您好，我们是 **toimc团队**， 是本项目的发起者，同时也是公众号（抖音同号）【toimc前端技术】的作者，我们希望通过有趣、有料、有价值的内容打造一个服务于前端开发者的社区，帮助前端开发者学习并创造出影响行业的技术。
-
-如果你想进一步了解我们，欢迎关注我们的公众号和抖音号
-
-<img src="./src/about/assets/image-20210525181232836.png" alt="image-20210525181232836"  width="28%" height="28%" /><img src="./src/about/assets/image-20210525181759916.png" alt="image-20210525181759916"  width="27%" height="27%" />
-
-## 开源协议
-
-本项目基于 GPL-3.0 开源协议，协议详情请阅读[GPL-3.0 LICENES](https://github.com/toimc-team/front-end-notes/blob/master/LICENSE)
 
