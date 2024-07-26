@@ -1,4 +1,4 @@
-name: '个人博客搭建'
+name: '博客搭建'
 on:
   push:
     branches: [master]
@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
@@ -24,21 +25,17 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
+
       - name: Install Dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm i
+        run: npm ci
 
       # Vuepress Build.
       - name: Generates Pages
-        run: |
-          npm run build
-      - name: Deploy to GitHub Pages
-        uses: lijinhai255/font-end-nodes
+        run: npm run build
+
+      - name: Deploy to GitHub Pages 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.0
         with:
-          # 部署到 gh-pages 分支
-          target_branch: gh-pages
-          # 部署目录为 VuePress 的默认输出目录
-          build_dir: docs/.vuepress/dist
-        env:
-          # @see https://docs.github.com/cn/actions/reference/authentication-in-a-workflow#about-the-github_token-secret
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          repository-name: lijinhai255.github.io
+          branch: master
+          folder: ./src/.vuepress/dist
