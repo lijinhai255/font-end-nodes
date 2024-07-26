@@ -395,7 +395,7 @@ const sidebar = {
   ]
 }
 
-const isDev = process.env.NODE_ENV === 'development'
+// const isDev = process.env.NODE_ENV === 'development'
 
 module.exports = {
   configureWebpack: {

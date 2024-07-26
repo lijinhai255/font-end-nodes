@@ -406,7 +406,7 @@ export default new Vue()
 
 ### 组件生命周期 （多个组件）
 
-![多组件生命周期执行顺序](/images/image.png)
+![多组件生命周期执行顺序](/font-end-nodes/images/image.png)
 
 
 ### vue 高级特性
@@ -486,9 +486,6 @@ export default {
 > 2. data 改变后 ，dom不会立刻渲染
 > 3. $nextTick 会在DOM渲染之后被触发，以获取最新的DOM节点
 
-```vue
-```
-
 ##### nextTick.vue
 ```vue
 <template>
@@ -531,3 +528,70 @@ export default {
 
 
 ```
+
+#### slot
+父组件 向子组件 插入东西
+
+##### 基本使用
+
+###### index.vue
+```vue
+<template>
+  <div>
+    <p>vue 高级特性</p>
+    <hr />
+    <!-- slot -->
+    <SlotDemo :url="website.url">
+            {{website.title}}
+    </SlotDemo>
+    
+  </div>
+</template>
+
+<script>
+
+import SlotDemo from './SlotDemo'
+
+import MixinDemo from "./MixinDemo";
+
+export default {
+  components: {
+    SlotDemo,
+  },
+  data() {
+    return {
+      name: "双越",
+      website: {
+        url: "http://imooc.com/",
+        title: "imooc",
+        subTitle: "程序员的梦工厂",
+      },
+    };
+  },
+};
+</script>
+
+```
+
+###### SoltDemo.vue
+```vue
+<template>
+    <a :href="url">
+        <slot>
+            默认内容，即父组件没设置内容时，这里显示
+        </slot>
+    </a>
+</template>
+
+<script>
+export default {
+    props: ['url'],
+    data() {
+        return {}
+    }
+}
+</script>
+```
+
+##### 作用域插槽
+##### 具名插槽
