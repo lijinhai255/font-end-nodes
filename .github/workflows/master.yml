@@ -34,9 +34,9 @@ jobs:
           npm run build
 
       - name: Deploy Github Pages🚀
-        uses: lijinhai255/github-pages-deploy-action@4.1.0
+        uses: JamesIves/github-pages-deploy-action@4.1.0
         with:
-          repository-name: lijinhai255/notes-page # The branch the action should deploy to.
+          repository-name: toimc-team/notes-page # The branch the action should deploy to.
           branch: master
           folder: ./src/.vuepress/dist # The folder the action should deploy.
           ssh-key: ${{ secrets.DEPLOY_KEY }}
