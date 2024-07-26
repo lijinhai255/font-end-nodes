@@ -33,7 +33,7 @@ jobs:
         run: |
           npm run build
       - name: Deploy to GitHub Pages
-        uses: crazy-max/ghaction-github-pages@v4
+        uses: lijinhai255/font-end-nodes
         with:
           # 部署到 gh-pages 分支
           target_branch: gh-pages
