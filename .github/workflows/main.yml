@@ -32,10 +32,13 @@ jobs:
       - name: Generates Pages
         run: |
           npm run build
-      - name: Deploy Github Pages🚀
-        uses: JamesIves/github-pages-deploy-action@4.1.0
+      - name: Deploy to GitHub Pages
+        uses: crazy-max/ghaction-github-pages@v4
         with:
-          repository-name: git@github.com:lijinhai255/lijinhai255.github.io.git # The branch the action should deploy to.
-          branch: master
-          folder: ./src/.vuepress/dist # The folder the action should deploy.
-          ssh-key: ${{ secrets.DEPLOY_KEY }}
+          # 部署到 gh-pages 分支
+          target_branch: gh-pages
+          # 部署目录为 VuePress 的默认输出目录
+          build_dir: docs/.vuepress/dist
+        env:
+          # @see https://docs.github.com/cn/actions/reference/authentication-in-a-workflow#about-the-github_token-secret
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
