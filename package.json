@@ -12,7 +12,7 @@
     "type": "git",
     "url": "git@github.com:lijinhai255/font-end-nodes.git"
   },
-  "author": "brian",
+  "author": "lijinhai255",
   "license": "GPL-3.0",
   "devDependencies": {
     "@vuepress/plugin-back-to-top": "^1.8.2",
