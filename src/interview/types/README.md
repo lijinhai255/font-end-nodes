@@ -594,4 +594,73 @@ export default {
 ```
 
 ##### 作用域插槽
+
+###### index.vue
+```vue
+<template>
+  <div>
+    <p>vue 高级特性</p>
+    <hr />
+
+    <ScopedSlotDemo :url="website.url">
+            <template v-slot="slotProps">
+                {{slotProps.slotData.title}}
+            </template>
+    </ScopedSlotDemo>
+  </div>
+</template>
+
+<script>
+
+import ScopedSlotDemo from './ScopedSlotDemo'
+
+
+export default {
+  components: {
+    ScopedSlotDemo,
+   
+  },
+  data() {
+    return {
+      name: "textName",
+      website: {
+        url: "",
+        title: "",
+        subTitle: "",
+      },
+      showFormDemo: false,
+    };
+  },
+};
+</script>
+
+```
+
+###### ScopedSlotDemo.vue
+```vue
+<template>
+    <a :href="url">
+        <slot :slotData="website">
+            {{website.subTitle}} <!-- 默认值显示 subTitle ，即父组件不传内容时 -->
+        </slot>
+    </a>
+</template>
+
+<script>
+export default {
+    props: ['url'],
+    data() {
+        return {
+            website: {
+                url: 'http://wangEditor.com/',
+                title: 'wangEditor',
+                subTitle: '轻量级富文本编辑器'
+            }
+        }
+    }
+}
+</script>
+```
 ##### 具名插槽
+
+![多组件生命周期执行顺序](/font-end-nodes/images/imageSlot.png)
