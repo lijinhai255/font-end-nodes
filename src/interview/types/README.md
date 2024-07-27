@@ -1255,6 +1255,6 @@ data.nums.push(4) // 监听数组
 4. 两个js对象也可以做dif  cujojs/jiff
 5. 两个树做diff ，这里的vdom diff 
 
-![diff](/font-end-nodes/images/diff.pngg)
+![diff](/font-end-nodes/images/diff.png)
 ![只比较同一层级](/font-end-nodes/images/diff_1.png)
-![tag不同，则直接删掉，不做深度比较](image-3.png)
+![tag不同，则直接删掉，不做深度比较](/font-end-nodes/images/diff_2.png)
