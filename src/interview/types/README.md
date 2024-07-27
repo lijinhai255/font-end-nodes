@@ -664,3 +664,16 @@ export default {
 ##### 具名插槽
 
 ![多组件生命周期执行顺序](/font-end-nodes/images/imageSlot.png)
+
+
+### 动态组件 
+
+![动态组件](/font-end-nodes/images/imageAsync.png)
+![alt text](/font-end-nodes/images/imageAsync1.png)
+> 1. :is = "component-name" 用法 
+> 2. 需要根据数据， 动态渲染场景 ，即组件类型不确定
+```vue
+<div v-for="(val,key)inde newData" :key="key">
+    <component :is="val.type"/>
+</div>
+```
