@@ -1258,3 +1258,361 @@ data.nums.push(4) // 监听数组
 ![diff](/font-end-nodes/images/diff.png)
 ![只比较同一层级](/font-end-nodes/images/diff_1.png)
 ![tag不同，则直接删掉，不做深度比较](/font-end-nodes/images/diff_2.png)
+
+1. patchNode 
+2. addVodes removeVodes
+3. updateChildren (体现key的重要性)
+```js
+  function sameVnode (vnode1: VNode, vnode2: VNode): boolean {
+  // key 和 sel 都相等
+  // undefined === undefined // true
+  return vnode1.key === vnode2.key && vnode1.sel === vnode2.sel;
+}
+  function removeVnodes (parentElm: Node,
+    vnodes: VNode[],
+    startIdx: number,
+    endIdx: number): void {
+    for (; startIdx <= endIdx; ++startIdx) {
+      let listeners: number, rm: () => void, ch = vnodes[startIdx];
+      if (ch != null) {
+        if (isDef(ch.sel)) {
+          invokeDestroyHook(ch); // hook 操作
+
+          // 移除 DOM 元素
+          listeners = cbs.remove.length + 1;
+          rm = createRmCb(ch.elm!, listeners);
+          for (let i = 0; i < cbs.remove.length; ++i) cbs.remove[i](ch, rm);
+          const removeHook = ch?.data?.hook?.remove;
+          if (isDef(removeHook)) {
+            removeHook(ch, rm);
+          } else {
+            rm();
+          }
+        } else { // Text node
+          api.removeChild(parentElm, ch.elm!);
+        }
+      }
+    }
+  }
+
+  function updateChildren (parentElm: Node,
+    oldCh: VNode[],
+    newCh: VNode[],
+    insertedVnodeQueue: VNodeQueue) {
+    let oldStartIdx = 0, newStartIdx = 0;
+    let oldEndIdx = oldCh.length - 1;
+    let oldStartVnode = oldCh[0];
+    let oldEndVnode = oldCh[oldEndIdx];
+    let newEndIdx = newCh.length - 1;
+    let newStartVnode = newCh[0];
+    let newEndVnode = newCh[newEndIdx];
+    let oldKeyToIdx: KeyToIndexMap | undefined;
+    let idxInOld: number;
+    let elmToMove: VNode;
+    let before: any;
+
+    while (oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx) {
+      if (oldStartVnode == null) {
+        oldStartVnode = oldCh[++oldStartIdx]; // Vnode might have been moved left
+      } else if (oldEndVnode == null) {
+        oldEndVnode = oldCh[--oldEndIdx];
+      } else if (newStartVnode == null) {
+        newStartVnode = newCh[++newStartIdx];
+      } else if (newEndVnode == null) {
+        newEndVnode = newCh[--newEndIdx];
+
+      // 开始和开始对比
+      } else if (sameVnode(oldStartVnode, newStartVnode)) {
+        patchVnode(oldStartVnode, newStartVnode, insertedVnodeQueue);
+        oldStartVnode = oldCh[++oldStartIdx];
+        newStartVnode = newCh[++newStartIdx];
+      
+      // 结束和结束对比
+      } else if (sameVnode(oldEndVnode, newEndVnode)) {
+        patchVnode(oldEndVnode, newEndVnode, insertedVnodeQueue);
+        oldEndVnode = oldCh[--oldEndIdx];
+        newEndVnode = newCh[--newEndIdx];
+
+      // 开始和结束对比
+      } else if (sameVnode(oldStartVnode, newEndVnode)) { // Vnode moved right
+        patchVnode(oldStartVnode, newEndVnode, insertedVnodeQueue);
+        api.insertBefore(parentElm, oldStartVnode.elm!, api.nextSibling(oldEndVnode.elm!));
+        oldStartVnode = oldCh[++oldStartIdx];
+        newEndVnode = newCh[--newEndIdx];
+
+      // 结束和开始对比
+      } else if (sameVnode(oldEndVnode, newStartVnode)) { // Vnode moved left
+        patchVnode(oldEndVnode, newStartVnode, insertedVnodeQueue);
+        api.insertBefore(parentElm, oldEndVnode.elm!, oldStartVnode.elm!);
+        oldEndVnode = oldCh[--oldEndIdx];
+        newStartVnode = newCh[++newStartIdx];
+
+      // 以上四个都未命中
+      } else {
+        if (oldKeyToIdx === undefined) {
+          oldKeyToIdx = createKeyToOldIdx(oldCh, oldStartIdx, oldEndIdx);
+        }
+        // 拿新节点 key ，能否对应上 oldCh 中的某个节点的 key
+        idxInOld = oldKeyToIdx[newStartVnode.key as string];
+  
+        // 没对应上
+        if (isUndef(idxInOld)) { // New element
+          api.insertBefore(parentElm, createElm(newStartVnode, insertedVnodeQueue), oldStartVnode.elm!);
+          newStartVnode = newCh[++newStartIdx];
+        
+        // 对应上了
+        } else {
+          // 对应上 key 的节点
+          elmToMove = oldCh[idxInOld];
+
+          // sel 是否相等（sameVnode 的条件）
+          if (elmToMove.sel !== newStartVnode.sel) {
+            // New element
+            api.insertBefore(parentElm, createElm(newStartVnode, insertedVnodeQueue), oldStartVnode.elm!);
+          
+          // sel 相等，key 相等
+          } else {
+            patchVnode(elmToMove, newStartVnode, insertedVnodeQueue);
+            oldCh[idxInOld] = undefined as any;
+            api.insertBefore(parentElm, elmToMove.elm!, oldStartVnode.elm!);
+          }
+          newStartVnode = newCh[++newStartIdx];
+        }
+      }
+    }
+    if (oldStartIdx <= oldEndIdx || newStartIdx <= newEndIdx) {
+      if (oldStartIdx > oldEndIdx) {
+        before = newCh[newEndIdx + 1] == null ? null : newCh[newEndIdx + 1].elm;
+        addVnodes(parentElm, before, newCh, newStartIdx, newEndIdx, insertedVnodeQueue);
+      } else {
+        removeVnodes(parentElm, oldCh, oldStartIdx, oldEndIdx);
+      }
+    }
+  }
+
+  function patchVnode (oldVnode: VNode, vnode: VNode, insertedVnodeQueue: VNodeQueue) {
+    // 执行 prepatch hook
+    const hook = vnode.data?.hook;
+    hook?.prepatch?.(oldVnode, vnode);
+
+    // 设置 vnode.elem
+    const elm = vnode.elm = oldVnode.elm!;
+  
+    // 旧 children
+    let oldCh = oldVnode.children as VNode[];
+    // 新 children
+    let ch = vnode.children as VNode[];
+
+    if (oldVnode === vnode) return;
+  
+    // hook 相关
+    if (vnode.data !== undefined) {
+      for (let i = 0; i < cbs.update.length; ++i) cbs.update[i](oldVnode, vnode);
+      vnode.data.hook?.update?.(oldVnode, vnode);
+    }
+
+    // vnode.text === undefined （vnode.children 一般有值）
+    if (isUndef(vnode.text)) {
+      // 新旧都有 children
+      if (isDef(oldCh) && isDef(ch)) {
+        if (oldCh !== ch) updateChildren(elm, oldCh, ch, insertedVnodeQueue);
+      // 新 children 有，旧 children 无 （旧 text 有）
+      } else if (isDef(ch)) {
+        // 清空 text
+        if (isDef(oldVnode.text)) api.setTextContent(elm, '');
+        // 添加 children
+        addVnodes(elm, null, ch, 0, ch.length - 1, insertedVnodeQueue);
+      // 旧 child 有，新 child 无
+      } else if (isDef(oldCh)) {
+        // 移除 children
+        removeVnodes(elm, oldCh, 0, oldCh.length - 1);
+      // 旧 text 有
+      } else if (isDef(oldVnode.text)) {
+        api.setTextContent(elm, '');
+      }
+
+    // else : vnode.text !== undefined （vnode.children 无值）
+    } else if (oldVnode.text !== vnode.text) {
+      // 移除旧 children
+      if (isDef(oldCh)) {
+        removeVnodes(elm, oldCh, 0, oldCh.length - 1);
+      }
+      // 设置新 text
+      api.setTextContent(elm, vnode.text!);
+    }
+    hook?.postpatch?.(oldVnode, vnode);
+  }
+
+  return function patch (oldVnode: VNode | Element, vnode: VNode): VNode {
+    let i: number, elm: Node, parent: Node;
+    const insertedVnodeQueue: VNodeQueue = [];
+    // 执行 pre hook
+    for (i = 0; i < cbs.pre.length; ++i) cbs.pre[i]();
+
+    // 第一个参数不是 vnode
+    if (!isVnode(oldVnode)) {
+      // 创建一个空的 vnode ，关联到这个 DOM 元素
+      oldVnode = emptyNodeAt(oldVnode);
+    }
+
+    // 相同的 vnode（key 和 sel 都相等）
+    if (sameVnode(oldVnode, vnode)) {
+      // vnode 对比
+      patchVnode(oldVnode, vnode, insertedVnodeQueue);
+    
+    // 不同的 vnode ，直接删掉重建
+    } else {
+      elm = oldVnode.elm!;
+      parent = api.parentNode(elm);
+
+      // 重建
+      createElm(vnode, insertedVnodeQueue);
+
+      if (parent !== null) {
+        api.insertBefore(parent, vnode.elm!, api.nextSibling(elm));
+        removeVnodes(parent, [oldVnode], 0, 0);
+      }
+    }
+
+    for (i = 0; i < insertedVnodeQueue.length; ++i) {
+      insertedVnodeQueue[i].data!.hook!.insert!(insertedVnodeQueue[i]);
+    }
+    for (i = 0; i < cbs.post.length; ++i) cbs.post[i]();
+    return vnode;
+  };
+}
+```
+在diff算法过程中，可以根据key来判断 哪些节点是相同的，不用销毁重新构建，只需移动就可以
+![alt text](/font-end-nodes/images/diff_3.png)
+
+### 模版编译
+
+1. 模版是vue开发中最常用的部分，即与使用相关量的原理
+2. 它不是html，有指令，插值，js表达式 
+3. 通过组件渲染和更新过程 进行考察
+4. 前置知识 ：js的with语法
+5. vue-template-complier 将模版编译成render函数
+6. 执行render 函数生成vnode 
+7. 基于vnode 再执行patch和diff 
+8. 使用wbapack vue-loader ，会在开发环境下编译模板
+#### width函数
+![alt text](/font-end-nodes/images/width.png)
+1. 改变{}内自由变量的查找规则，当做obj的属性来查找
+2. 如果找不到匹配的obj属性，就会报错
+3. with要慎用，打破了作用域规则，易读性变差
+vue-template-compiler
+```js
+const compiler = require('vue-template-compiler')
+
+// 插值
+// const template = `<p>{{message}}</p>`
+// with(this){return createElement('p',[createTextVNode(toString(message))])}
+// h -> vnode
+// createElement -> vnode
+
+// // 表达式
+// const template = `<p>{{flag ? message : 'no message found'}}</p>`
+// // with(this){return _c('p',[_v(_s(flag ? message : 'no message found'))])}
+
+// // 属性和动态属性
+// const template = `
+//     <div id="div1" class="container">
+//         <img :src="imgUrl"/>
+//     </div>
+// `
+// with(this){return _c('div',
+//      {staticClass:"container",attrs:{"id":"div1"}},
+//      [
+//          _c('img',{attrs:{"src":imgUrl}})])}
+
+// // 条件
+// const template = `
+//     <div>
+//         <p v-if="flag === 'a'">A</p>
+//         <p v-else>B</p>
+//     </div>
+// `
+// with(this){return _c('div',[(flag === 'a')?_c('p',[_v("A")]):_c('p',[_v("B")])])}
+
+// 循环
+// const template = `
+//     <ul>
+//         <li v-for="item in list" :key="item.id">{{item.title}}</li>
+//     </ul>
+// `
+// with(this){return _c('ul',_l((list),function(item){return _c('li',{key:item.id},[_v(_s(item.title))])}),0)}
+
+// 事件
+// const template = `
+//     <button @click="clickHandler">submit</button>
+// `
+// with(this){return _c('button',{on:{"click":clickHandler}},[_v("submit")])}
+
+// v-model
+const template = `<input type="text" v-model="name">`
+// 主要看 input 事件
+// with(this){return _c('input',{directives:[{name:"model",rawName:"v-model",value:(name),expression:"name"}],attrs:{"type":"text"},domProps:{"value":(name)},on:{"input":function($event){if($event.target.composing)return;name=$event.target.value}}})}
+
+// render 函数
+// 返回 vnode
+// patch
+
+// 编译
+const res = compiler.compile(template)
+console.log(res.render)
+
+// ---------------分割线--------------
+
+// // 从 vue 源码中找到缩写函数的含义
+// function installRenderHelpers (target) {
+//     target._o = markOnce;
+//     target._n = toNumber;
+//     target._s = toString;
+//     target._l = renderList;
+//     target._t = renderSlot;
+//     target._q = looseEqual;
+//     target._i = looseIndexOf;
+//     target._m = renderStatic;
+//     target._f = resolveFilter;
+//     target._k = checkKeyCodes;
+//     target._b = bindObjectProps;
+//     target._v = createTextVNode;
+//     target._e = createEmptyVNode;
+//     target._u = resolveScopedSlots;
+//     target._g = bindObjectListeners;
+//     target._d = bindDynamicKeys;
+//     target._p = prependModifier;
+// }
+
+```
+
+#### Vue组件使用render 代替template
+
+![Vue组件使用render 代替template](/font-end-nodes/images/render1.png)
+
+
+### 组件 渲染/更新过程 
+1. 一个组件渲染到页面，修改data 触发更新（数据驱动）
+    1. 响应式 监听get set 
+    2. 模版编译 编译成render   、
+    3. vdom:patch(elem,vnode) 和patch(vnode,newVnode)
+2. 初次渲染过程 
+    1. 解析模版render函数（开发环境已完成，vue-loader）
+    2. 触发响应式，监听data属性getter和setter
+    3.执行render函数(实际触发了getter )，生成vnode ，patch(ele,vnode)
+3. 更新过程
+    1. 修改data，触发setter（此前在getter中已被监听）
+    2. 重新执行render函数，生成newVnode
+    3. patch(vnode,newVnode)
+![渲染过程](/font-end-nodes/images/render2.png)
+4. 异步渲染
+    1. 回归$nextTick
+    2. 汇总data的修改，一次性更新视图
+    3. 减少dom操作次数，提升性能
+
+#### 总结 
+1. 渲染和响应式关系
+2. 渲染和模版编译关系
+2. 渲染的vdom关系
+
+### 前端路由原理 vue-router 
