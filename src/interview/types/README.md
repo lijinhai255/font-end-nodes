@@ -17,10 +17,182 @@
 
 
 ## Vue
+### 基本使用
+> 插值 表达式
+> 指令 动态属性
+> v-html:会有xss风险 会覆盖子组件
+```vue
+<template>
+    <div>
+        <p>文本插值 {{message}}</p>
+        <p>JS 表达式 {{ flag ? 'yes' : 'no' }} （只能是表达式，不能是 js 语句）</p>
 
+        <p :id="dynamicId">动态属性 id</p>
+
+        <hr/>
+        <p v-html="rawHtml">
+            <span>有 xss 风险</span>
+            <span>【注意】使用 v-html 之后，将会覆盖子元素</span>
+        </p>
+        <!-- 其他常用指令后面讲 -->
+    </div>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            message: 'hello vue',
+            flag: true,
+            rawHtml: '指令 - 原始 html <b>加粗</b> <i>斜体</i>',
+            dynamicId: `id-${Date.now()}`
+        }
+    }
+}
+</script>
+```
+#### computed和watch
+> computed 有缓存，data 不变则不会重新计算
+```vue
+<template>
+    <div>
+        <p>num {{num}}</p>
+        <p>double1 {{double1}}</p>
+        <input v-model="double2"/>
+    </div>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            num: 20
+        }
+    },
+    computed: {
+        double1() {
+            return this.num * 2
+        },
+        double2: {
+            get() {
+                return this.num * 2
+            },
+            set(val) {
+                this.num = val/2
+            }
+        }
+    }
+}
+</script>
+```
+> watch 如何深度监听
+> watch 监听引用类型，拿不到oldValue
+```vue
+<template>
+    <div>
+        <input v-model="name"/>
+        <input v-model="info.city"/>
+    </div>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            name: '双越',
+            info: {
+                city: '北京'
+            }
+        }
+    },
+    watch: {
+        name(oldVal, val) {
+            // eslint-disable-next-line
+            console.log('watch name', oldVal, val) // 值类型，可正常拿到 oldVal 和 val
+        },
+        info: {
+            handler(oldVal, val) {
+                // eslint-disable-next-line
+                console.log('watch info', oldVal, val) // 引用类型，拿不到 oldVal 。因为指针相同，此时已经指向了新的 val
+            },
+            deep: true // 深度监听
+        }
+    }
+}
+</script>
+```
+#### class和style
+
+> 使用动态属性
+> 使用驼峰写法
+```vue
+<template>
+    <div>
+        <p :class="{ black: isBlack, yellow: isYellow }">使用 class</p>
+        <p :class="[black, yellow]">使用 class （数组）</p>
+        <p :style="styleData">使用 style</p>
+    </div>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            isBlack: true,
+            isYellow: true,
+
+            black: 'black',
+            yellow: 'yellow',
+
+            styleData: {
+                fontSize: '40px', // 转换为驼峰式
+                color: 'red',
+                backgroundColor: '#ccc' // 转换为驼峰式
+            }
+        }
+    }
+}
+</script>
+
+<style scoped>
+    .black {
+        background-color: #999;
+    }
+    .yellow {
+        color: yellow;
+    }
+</style>
+```
+uiuu
+#### 条件渲染 
+> v-if v-else的用法， 可使用变量，也可以使用===表达式
+> v-if 和v-show的区别 v-show是通过css的display:none 控制的 v-if是通过vue的本身的机制来判断这个语句是否要展示和销毁 组件频繁切换使用v-show 组件切换一次 不会再有大的动作使用v-if
+> v-if 和v-show 的使用场景 
+```vue
+<template>
+    <div>
+        <p v-if="type === 'a'">A</p>
+        <p v-else-if="type === 'b'">B</p>
+        <p v-else>other</p>
+
+        <p v-show="type === 'a'">A by v-show</p>
+        <p v-show="type === 'b'">B by v-show</p>
+    </div>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            type: 'a'
+        }
+    }
+}
+</script>
+```
 ### 如何遍历数组 
 
-> v-if 的计算优先级要高于 v-for 
+> v-if 的计算优先级要高于 v-for  
 ```vue
 <template>
     <div>
@@ -60,6 +232,7 @@ export default {
 }
 </script>
 ```
+
 
 ### 事件 
 
@@ -216,8 +389,8 @@ export default {
 
 ### Vue父子组件如何通讯 
 
-> 1 props和$emit
-> 2 组件通讯 - 自定义事件
+> 1 props和$emit （属性和触发事件的方法）
+> 2 组件通讯 - 自定义事件 或者使用vuex
 > 3 组件生命周期
 
 #### Vue.index
@@ -560,10 +733,10 @@ export default {
   },
   data() {
     return {
-      name: "双越",
+      name: "ljh",
       website: {
-        url: "http://imooc.com/",
-        title: "imooc",
+        url: "http://baidu.com/",
+        title: "lijinhaiText",
         subTitle: "程序员的梦工厂",
       },
     };
@@ -673,7 +846,7 @@ export default {
 > 1. :is = "component-name" 用法 
 > 2. 需要根据数据， 动态渲染场景 ，即组件类型不确定
 ```vue
-<div v-for="(val,key)inde newData" :key="key">
+<div v-for="(val,key) in newData" :key="key">
     <component :is="val.type"/>
 </div>
 ```
@@ -818,7 +991,7 @@ export default {
 > 3. mixin和组件可能会出现多对多的关系，复杂度较高
 
 ### VueX 使用 
-![vuex](/font-end-nodes/images//Vuex.png)
+![vuex](/font-end-nodes/images/Vuex.png)
 > 基本概念, 基本使用和API 使用 
 
 >> dispatch
@@ -832,3 +1005,256 @@ export default {
 >> maapActions
 
 >> mapMutations
+
+
+## Vue-router的使用
+
+> 路由模式 (hash、 H5 history)
+```vue
+const User = {
+    template:`<div>User {{$route.params.id}}</div>`
+}
+const router = new VueRouter({
+    routes:[
+        {
+            // 动态路径参数，以冒号开头`/user/10`等格式的路由
+            path: `/user/:id`,
+            component:User
+        }
+    ]
+})
+```
+> 路由配置 （动态路由 懒加载）
+
+
+## Vue原理
+
+### 组件化基础 MVVM模型 
+
+> 数据驱动视图
+![vuex](/font-end-nodes/images/imageMVVM.png)
+
+### Vue响应式
+
+> 组件data的数据一旦发生变化，立即触发试图的更新
+
+> 实现数据驱动的第一步
+
+> 核心的API - Object.defineProperty 缺点有哪些 Vue3.0启用proxy（兼容性的问题，无法使用polyfill）
+
+![vuex](/font-end-nodes/images/Object.png)
+
+> 监听对象，监听数据  
+> 复杂对象，深度监听,需要递归到底，一次性计算量大 
+> 缺点有哪些 
+>> 深度监听,需要递归到底，一次性计算量大 
+>> 无法监听新增属性/删除属性 （Vue.set Vue.delete）
+
+```js
+// 触发更新视图
+function updateView() {
+    console.log('视图更新')
+}
+
+// 重新定义数组原型
+const oldArrayProperty = Array.prototype
+// 创建新对象，原型指向 oldArrayProperty ，再扩展新的方法不会影响原型
+const arrProto = Object.create(oldArrayProperty);
+['push', 'pop', 'shift', 'unshift', 'splice'].forEach(methodName => {
+    arrProto[methodName] = function () {
+        updateView() // 触发视图更新
+        oldArrayProperty[methodName].call(this, ...arguments)
+        // Array.prototype.push.call(this, ...arguments)
+    }
+})
+
+// 重新定义属性，监听起来
+function defineReactive(target, key, value) {
+    // 深度监听
+    observer(value)
+
+    // 核心 API
+    Object.defineProperty(target, key, {
+        get() {
+            return value
+        },
+        set(newValue) {
+            if (newValue !== value) {
+                // 深度监听
+                observer(newValue)
+
+                // 设置新值
+                // 注意，value 一直在闭包中，此处设置完之后，再 get 时也是会获取最新的值
+                value = newValue
+
+                // 触发更新视图
+                updateView()
+            }
+        }
+    })
+}
+
+// 监听对象属性
+function observer(target) {
+    if (typeof target !== 'object' || target === null) {
+        // 不是对象或数组
+        return target
+    }
+
+    // 污染全局的 Array 原型
+    // Array.prototype.push = function () {
+    //     updateView()
+    //     ...
+    // }
+
+    if (Array.isArray(target)) {
+        target.__proto__ = arrProto
+    }
+
+    // 重新定义各个属性（for in 也可以遍历数组）
+    for (let key in target) {
+        defineReactive(target, key, target[key])
+    }
+}
+
+// 准备数据
+const data = {
+    name: 'zhangsan',
+    age: 20,
+    info: {
+        address: '北京' // 需要深度监听
+    },
+    nums: [10, 20, 30]
+}
+
+// 监听数据
+observer(data)
+
+// 测试
+// data.name = 'lisi'
+// data.age = 21
+// // console.log('age', data.age)
+// data.x = '100' // 新增属性，监听不到 —— 所以有 Vue.set
+// delete data.name // 删除属性，监听不到 —— 所有已 Vue.delete
+// data.info.address = '上海' // 深度监听
+data.nums.push(4) // 监听数组
+
+```
+
+
+### 虚拟DOM（Virtual DOM）和diff
+1. vodm是实现vue和React的重要基石
+2. diff算法是vdom中最核心，最重要的部分。dom操作是非常耗费性能的，以前jquery，可以自行操作dom操作的时机，手动调成，vue和react 是数据驱动视图，如何有效的控制dom操作？
+3. vdom解决方案提出，当页面有了一定的复杂度，想减少计算次数比较难
+4. 能不能把计算，更多的转移到js计算上，因为js执行速度很快
+5. vdom - 用js模拟dom结构，新旧vnode对比，计算出最小的变更范围，最后更想你dom，数据驱动视图的模式下，有效的控制dom操作
+![vdom](/font-end-nodes/images/vdom.png)
+#### 通过snabbdom 学习vdom
+```js
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div id="container"></div>
+    <button id="btn-change">change</button>
+
+    <script src="https://cdn.bootcss.com/snabbdom/0.7.3/snabbdom.js"></script>
+    <script src="https://cdn.bootcss.com/snabbdom/0.7.3/snabbdom-class.js"></script>
+    <script src="https://cdn.bootcss.com/snabbdom/0.7.3/snabbdom-props.js"></script>
+    <script src="https://cdn.bootcss.com/snabbdom/0.7.3/snabbdom-style.js"></script>
+    <script src="https://cdn.bootcss.com/snabbdom/0.7.3/snabbdom-eventlisteners.js"></script>
+    <script src="https://cdn.bootcss.com/snabbdom/0.7.3/h.js"></script>
+    <script type="text/javascript">
+        const snabbdom = window.snabbdom
+        // 定义关键函数 patch
+        const patch = snabbdom.init([
+            snabbdom_class,
+            snabbdom_props,
+            snabbdom_style,
+            snabbdom_eventlisteners
+        ])
+
+        // 定义关键函数 h
+        const h = snabbdom.h
+
+        // 原始数据
+        const data = [
+            {
+                name: '张三',
+                age: '20',
+                address: '北京'
+            },
+            {
+                name: '李四',
+                age: '21',
+                address: '上海'
+            },
+            {
+                name: '王五',
+                age: '22',
+                address: '广州'
+            }
+        ]
+        // 把表头也放在 data 中
+        data.unshift({
+            name: '姓名',
+            age: '年龄',
+            address: '地址'
+        })
+
+        const container = document.getElementById('container')
+
+        // 渲染函数
+        let vnode
+        function render(data) {
+            const newVnode = h('table', {}, data.map(item => {
+                const tds = []
+                for (let i in item) {
+                    if (item.hasOwnProperty(i)) {
+                        tds.push(h('td', {}, item[i] + ''))
+                    }
+                }
+                return h('tr', {}, tds)
+            }))
+
+            if (vnode) {
+                // re-render
+                patch(vnode, newVnode)
+            } else {
+                // 初次渲染
+                patch(container, newVnode)
+            }
+
+            // 存储当前的 vnode 结果
+            vnode = newVnode
+        }
+
+        // 初次渲染
+        render(data)
+
+
+        const btnChange = document.getElementById('btn-change')
+        btnChange.addEventListener('click', () => {
+            data[1].age = 30
+            data[2].address = '深圳'
+            // re-render
+            render(data)
+        })
+
+    </script>
+</body>
+</html>
+```
+## diff算法 
+1. diff算法是vdom中最核心。最关键的部分
+2. diff算法能在日常使用vue和react中体现出来（如key）
+3. diff即对比，以一个广泛的概念，如linux diff命令 git diff 等
+4. 两个js对象也可以做dif  cujojs/jiff
+5. 两个树做diff ，这里的vdom diff 
+
+![diff](/font-end-nodes/images/diff.pngg)
+![只比较同一层级](/font-end-nodes/images/diff_1.png)
+![tag不同，则直接删掉，不做深度比较](image-3.png)
