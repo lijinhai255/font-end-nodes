@@ -166,7 +166,7 @@ export default {
 uiuu
 #### 条件渲染 
 > v-if v-else的用法， 可使用变量，也可以使用===表达式
-> v-if 和v-show的区别 v-show是通过css的display:none 控制的 v-if是通过vue的本身的机制来判断这个语句是否要展示和销毁 组件频繁切换使用v-show 组件切换一次 不会再有大的动作使用v-if
+> v-if 和v-show的区别 v-show是通过css的display:none 控制的 v-if是通过vue的本身的机制来判断这个语句是否要展示和销毁(v-if组件真正的渲染和销毁，而不是显示隐藏) 组件频繁切换使用v-show 组件切换一次 不会再有大的动作使用v-if
 > v-if 和v-show 的使用场景 
 ```vue
 <template>
@@ -1662,3 +1662,110 @@ console.log(res.render)
 </body>
 </html>
 ```
+##### h5 hastory 
+1. 用UR 规范的路由，但跳转是不刷新页面
+2. history.pushstate
+3. window.onpopstate
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>history API test</title>
+</head>
+<body>
+    <p>history API test</p>
+    <button id="btn1">修改 url</button>
+
+    <script>
+        // 页面初次加载，获取 path
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('load', location.pathname)
+        })
+
+        // 打开一个新的路由
+        // 【注意】用 pushState 方式，浏览器不会刷新页面
+        document.getElementById('btn1').addEventListener('click', () => {
+            const state = { name: 'page1' }
+            console.log('切换路由到', 'page1')
+            history.pushState(state, '', 'page1') // 重要！！
+        })
+
+        // 监听浏览器前进、后退
+        window.onpopstate = (event) => { // 重要！！
+            console.log('onpopstate', event.state, location.pathname)
+        }
+
+        // 需要 server 端配合，可参考
+        // https://router.vuejs.org/zh/guide/essentials/history-mode.html#%E5%90%8E%E7%AB%AF%E9%85%8D%E7%BD%AE%E4%BE%8B%E5%AD%90
+    </script>
+</body>
+</html>
+```
+### 为何在v-for 中用key
+1. 必须用key，切不能是index和random
+2. diff算法中通过tag和key来判断，是否是sameNode
+3. 减少渲染次数，提升渲染性能
+
+### 双向数据绑定 v-model 的实现原理
+1. input元素的value = this.name
+2. 绑定input 事件 this.name = $event,target.value
+3. data更新触发re-render
+
+### 为何组件data 必须是个函数 
+![为何组件data 必须是个函数 ](/font-end-nodes/images/image-7.png)
+1. vue 是个calss 对vue的实例话 ，data是个函数能保证里边的data是在闭包中，
+
+### ajax 请求放在那个生命周期中
+1. mounted 
+2. js 是单线程，ajax 异步获取数据
+3. 放在mounded 之前没有用，只会让逻辑更加混乱
+
+### 何时需要使用beforeDestory
+
+1. 解除自定义事件 event.$off
+2. 清除定时器
+3. 解绑自定义的dom事件 ，如window scroll等
+
+### Vuex中action和mutation 有何区别
+
+1. action 中处理异步，mutation 不可以
+2. mutation 做原子操作
+3. action可以整合多个mutation
+
+
+### 如何配置vue-router异步加载
+![alt text](/font-end-nodes/images/image-8.png)
+
+
+### vue常见的性能优化方式
+
+1. 合理使用v-show 和v-if 
+2. 合理使用computed
+3. v-for时加key ,避免和v-if 同时使用
+4. 自定义事件，dom事件及时销毁
+5. 合理使用异步组件
+6. 合理使用keep-alive
+7. data 层级不要太深
+8. v-loade 在开发环境预编译
+9. webpack层面的优化
+10. 前端通用的性能优化， 如图片懒加载
+11. 使用ssr
+
+
+## Vue3
+
+### Vue3比Vue2 有哪些优势？
+### 描述Vu3生命周期
+### 如何看待Composition Api 和Options API
+### 如何理解ref toRef 和 toRefs 
+### Vue3升级了哪些重要功能
+### Composition API 如何实现代码逻辑的复用
+### Vue3 如何实现响应式 
+### watch和warchEffect的区别是什么 
+### setup中如何获取组件势力3
+### Vue3为何比Vue2快 
+### vite 是什么
+### Composition API 和 React Hooks的对比
