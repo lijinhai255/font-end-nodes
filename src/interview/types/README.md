@@ -1616,3 +1616,49 @@ console.log(res.render)
 2. 渲染的vdom关系
 
 ### 前端路由原理 vue-router 
+#### 路由模式 
+1. hash
+2. H5 history
+![alt text](/font-end-nodes/images/image-6.png)
+##### hash特点
+1. hash 变化会触发网页的跳转，即浏览器的前进和后退
+2. hash 变化不会刷新页面，spa必须的特点
+3. hash 永远不会提交到serve 端 
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>hash test</title>
+</head>
+<body>
+    <p>hash test</p>
+    <button id="btn1">修改 hash</button>
+
+    <script>
+        // hash 变化，包括：
+        // a. JS 修改 url
+        // b. 手动修改 url 的 hash
+        // c. 浏览器前进、后退
+        window.onhashchange = (event) => {
+            console.log('old url', event.oldURL)
+            console.log('new url', event.newURL)
+
+            console.log('hash:', location.hash)
+        }
+
+        // 页面初次加载，获取 hash
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('hash:', location.hash)
+        })
+
+        // JS 修改 url
+        document.getElementById('btn1').addEventListener('click', () => {
+            location.href = '#/user'
+        })
+    </script>
+</body>
+</html>
+```
