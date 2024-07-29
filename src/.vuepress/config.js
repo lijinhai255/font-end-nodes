@@ -43,6 +43,18 @@ const nav = [
         text: '语言基础',
         items: [
           {
+            text: 'JavaScript',
+            link: '/basic/Js/'
+          },
+          {
+            text: 'ECMAScript',
+            link: '/basic/Es/'
+          },
+          {
+            text: 'NodeJS',
+            link: '/basic/nodeJs/'
+          },
+          {
             text: 'TypeScript',
             link: '/basic/ts/'
           },
