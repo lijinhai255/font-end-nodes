@@ -48,7 +48,7 @@ const nav = [
           },
           {
             text: 'ECMAScript',
-            link: '/basic/es/'
+            link: '/basic/esText/'
           },
           {
             text: 'NodeJS',
@@ -201,7 +201,7 @@ const sidebar = {
     {
       title: 'ECMAScript',
       collapsable: false,
-      children: genSidebarConfig('basic/es', siderBarOptions)
+      children: genSidebarConfig('basic/esText', siderBarOptions)
     },
     {
       title: 'Node.js进阶',
