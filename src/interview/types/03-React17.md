@@ -483,7 +483,7 @@ export default TodoListDemo
 - DOM 事件，setTimeout：异步更新 + 合并state  
 - Automatic Batching 自动批处理
 :::
-
+![setState](./assets/22.png)
 ```jsx
 import React from 'react'
 
@@ -1106,7 +1106,7 @@ export default VisibleTodoList
 // React.createElement(List, null, child1, child2, '文本节点')
 // // h 函数
 // // 返回 vnode
-// // patch
+// // patch：patch(elem,vnode) 和patch(vnode,newVode)
 
 React.createElement 即h函数，返回vnode
 - 一个参数，可能是组件，也可能是html tag
@@ -1122,16 +1122,101 @@ React.createElement 即h函数，返回vnode
 - 所有事件挂载到document上（react 17 挂载到body上 利于多个React版本并存）
 - event 不是原生的， 是syntheticEvent 合成事件对象
 - 和vue事件不同， 和dom 事件不同
+- dispatchEvent 机制
 :::
 ![alt text](./assets/14.png)
 
 ### 为什么 
 - 更好的兼容性和跨平台
-- 挂载document ， 减少内存消耗，避免频繁解绑。
+- 挂载document，减少内存消耗，避免频繁解绑。
 - 方便事件的统一管理（事物机制）
 
 
 ## setState主流程
+### 哪些能命中batchUpdate机制
+- 生命周期（和它调用的函数）
+- React中注册的事件（和它调用的函数）
+- React可以‘管到’的入口
+### 哪些不能命中batchUpdata机制
+- setTimeout setInterval 
+- 自定义的DOM事件
+- React‘管不到’的入口
+
+
 ![setState主流程](./assets/15.png)
 ![alt text](./assets/16.png)
 ![alt text](./assets/17.png)
+![alt text](./assets/18.png)
+
+## React事务(transcation事务机制)
+
+![alt text](./assets/19.png)
+![alt text](./assets/20.png)
+![alt text](./assets/21.png)
+
+## 组件渲染和更新过程
+### 组件渲染
+- props state 
+- render() 生成vnode
+- parch(ele,vnode)
+
+### 更新过程
+- setState(newState)-> dirtyComponents(有可能子组件)
+- render()生成newVnode
+- patch(vnode,newVode)
+### 更新的两个阶段
+- patch被拆分为两个阶段
+- reconciliation 阶段 - 执行diff算法 ，纯js计算
+- commit 阶段 - 将diff 结果渲染dom 上 
+#### 可能存在的性能问题
+- js是单线程，且和DOM渲染公用一个线程
+- 当组件足够复杂，组件更新时计算和渲染都压力大
+- 同时在有DOM操作需要（动画，鼠标拖拽等），将卡顿
+#### 解决方案fiber
+ - 将reconciliation 阶段进行人物拆分（commit 无法拆分）
+ - DOM 需要渲染时暂停，空闲时恢复
+ - window.requestIdleCallback
+
+ [requestIdleCallback](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/requestIdleCallback)
+
+## React 总结
+- 函数式编程
+> 1. 纯函数 
+> 2. 不可变值 
+- jsx 本质和vdom
+> 1. jsx 即createElement函数
+> 2. 执行生成vnode
+> 3. patch：patch(elem,vnode) 和patch(vnode,newVode)
+- 合成事件
+> 1. 所有事件挂载到document上（react 17 挂载到body上 利于多个React版本并存）
+> 2. event 不是原生的， 是syntheticEvent 合成事件对象
+> 3. 和vue事件不同， 和dom 事件不同
+- setState batchUpdate
+> 1. setState的表现（重要）和主流程
+> 2. batchUpdate机制
+> 3. transaction(事物)机制
+- 组件渲染过程
+> 1. 组件渲染和更新流程
+> 2. 更新的两个阶段 reconciliation commit 
+> 3. react filber 
+
+## React 性能优化
+- 渲染列表时加key
+- 自定义事件，dom事件及时销毁
+- 合理使用异步组件
+- 减少函数bind this 次数
+- 合理使用scu PureComponent和memo
+- 合理使用immutable.js
+- webpack 性能优护
+- 前端通用的性能优化，图片懒加载
+- 使用ssr 
+
+## React 和Vue 区别 
+- 都支持组件化
+- 都是数据驱动视图
+- 都使用vdom 操作DOM
+- React 使用jsx 拥抱js ，Vue使用模板拥抱html
+- React 函数时编程，Vue声明式编程 
+- React更多需要自力更生，Vue 想要的都给了
+吗
+
