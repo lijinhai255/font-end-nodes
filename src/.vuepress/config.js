@@ -44,7 +44,7 @@ const nav = [
         items: [
           {
             text: 'JavaScript',
-            link: '/basic/js/'
+            link: '/basic/jscriptText/'
           },
           {
             text: 'ECMAScript',
@@ -196,7 +196,7 @@ const sidebar = {
     {
       title: 'JavaScript',
       collapsable: false,
-      children: genSidebarConfig('basic/js', siderBarOptions)
+      children: genSidebarConfig('basic/jscriptText', siderBarOptions)
     },
     {
       title: 'ECMAScript',
