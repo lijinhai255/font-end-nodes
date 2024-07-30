@@ -44,11 +44,11 @@ const nav = [
         items: [
           {
             text: 'JavaScript',
-            link: '/basic/Js/'
+            link: '/basic/js/'
           },
           {
             text: 'ECMAScript',
-            link: '/basic/Es/'
+            link: '/basic/es/'
           },
           {
             text: 'NodeJS',
@@ -83,98 +83,98 @@ const nav = [
       }
     ]
   },
-  {
-    text: 'DevOps',
-    items: [
-      {
-        text: '效率工具',
-        items: [
-          {
-            text: 'Jenkins',
-            link: '/devops/jenkins/'
-          }
-        ]
-      },
-      {
-        text: '团队协同',
-        items: [
-          {
-            text: 'gitlab',
-            link: '/devops/gitlab/'
-          },
-          {
-            text: 'showDoc',
-            link: '/devops/showdoc/'
-          },
-          {
-            text: 'DOClever',
-            link: '/devops/doclever/'
-          }
-        ]
-      },
-      {
-        text: '容器化',
-        items: [
-          {
-            text: 'Docker进阶',
-            link: '/devops/docker-advance/'
-          },
-          {
-            text: 'Kubernetes',
-            link: '/devops/k8s/'
-          }
-        ]
-      }
-    ]
-  },
-  {
-    text: '全端项目',
-    items: [
-      {
-        text: '社区项目',
-        items: [
-          {
-            text: '社区PC',
-            link: '/project/community-pc/'
-          },
-          {
-            text: '管理后台',
-            link: '/project/community-admin/'
-          },
-          {
-            text: 'WebApp',
-            link: '/project/community-webapp/'
-          }
-        ]
-      },
-      {
-        text: '多平台+跨端',
-        items: [
-          {
-            text: '微信小程序',
-            link: '/project/community-miniapp/'
-          },
-          {
-            text: 'Flutter 2.0',
-            link: '/project/community-flutter/'
-          },
-          {
-            text: 'Electron桌面端',
-            link: '/project/community-electron/'
-          }
-        ]
-      },
-      {
-        text: 'React世界',
-        items: [
-          {
-            text: 'React',
-            link: '/project/react/'
-          }
-        ]
-      }
-    ]
-  },
+  // {
+  //   text: 'DevOps',
+  //   items: [
+  //     {
+  //       text: '效率工具',
+  //       items: [
+  //         {
+  //           text: 'Jenkins',
+  //           link: '/devops/jenkins/'
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       text: '团队协同',
+  //       items: [
+  //         {
+  //           text: 'gitlab',
+  //           link: '/devops/gitlab/'
+  //         },
+  //         {
+  //           text: 'showDoc',
+  //           link: '/devops/showdoc/'
+  //         },
+  //         {
+  //           text: 'DOClever',
+  //           link: '/devops/doclever/'
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       text: '容器化',
+  //       items: [
+  //         {
+  //           text: 'Docker进阶',
+  //           link: '/devops/docker-advance/'
+  //         },
+  //         {
+  //           text: 'Kubernetes',
+  //           link: '/devops/k8s/'
+  //         }
+  //       ]
+  //     }
+  //   ]
+  // },
+  // {
+  //   text: '全端项目',
+  //   items: [
+  //     {
+  //       text: '社区项目',
+  //       items: [
+  //         {
+  //           text: '社区PC',
+  //           link: '/project/community-pc/'
+  //         },
+  //         {
+  //           text: '管理后台',
+  //           link: '/project/community-admin/'
+  //         },
+  //         {
+  //           text: 'WebApp',
+  //           link: '/project/community-webapp/'
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       text: '多平台+跨端',
+  //       items: [
+  //         {
+  //           text: '微信小程序',
+  //           link: '/project/community-miniapp/'
+  //         },
+  //         {
+  //           text: 'Flutter 2.0',
+  //           link: '/project/community-flutter/'
+  //         },
+  //         {
+  //           text: 'Electron桌面端',
+  //           link: '/project/community-electron/'
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       text: 'React世界',
+  //       items: [
+  //         {
+  //           text: 'React',
+  //           link: '/project/react/'
+  //         }
+  //       ]
+  //     }
+  //   ]
+  // },
   {
     text: '前端面试',
     items: [
@@ -193,6 +193,16 @@ const nav = [
 
 const sidebar = {
   '/basic/': [
+    {
+      title: 'JavaScript',
+      collapsable: false,
+      children: genSidebarConfig('basic/js', siderBarOptions)
+    },
+    {
+      title: 'ECMAScript',
+      collapsable: false,
+      children: genSidebarConfig('basic/es', siderBarOptions)
+    },
     {
       title: 'Node.js进阶',
       collapsable: false,

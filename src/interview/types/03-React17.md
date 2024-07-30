@@ -1,5 +1,5 @@
 ---
-sidebarDepth: 4
+sidebarDepth: 2
 ---
 
 # React17
@@ -468,20 +468,22 @@ class TodoListDemo extends React.Component {
 export default TodoListDemo
 
 ```
-#### setState
+## setState
 
 - 不可变值 
 - 可能是异步更新
 - 可能会被合并
+
 :::tip
-##### React <=17 setState
+### React <=17 setState
 - React组件更新：异步更新+ 合并state
 - DOM事件，setTimeout：同步更新，不合并state 
-##### React 18  setState
+### React 18  setState
 - React组件事件：异步更新+合并state
 - DOM 事件，setTimeout：异步更新 + 合并state  
 - Automatic Batching 自动批处理
 :::
+
 ```jsx
 import React from 'react'
 
@@ -658,10 +660,11 @@ export default useStateDemo
 ### [组件生命周期](https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)
 
 ![组件生命周期](./assets/image20.png)
-![![不常用组件生命周期](./assets/image21.png)]
-### React高级特性
+![不常用组件生命周期](./assets/image21.png)
 
-####  函数组件 
+## React高级特性
+
+###  函数组件 
 :::tip
 - 纯函数，输出props， 输出jsx 
 - 没有实例， 没有生命周期，没有state
@@ -669,7 +672,7 @@ export default useStateDemo
 :::
 ![函数组件](./assets/image22.png)
 
-#### 非受控组件 
+### 非受控组件 
 :::tip
 - ref 
 - defaultValue defaultChecked
@@ -726,7 +729,7 @@ class App extends React.Component {
 export default App
 
 ```
-#### Protals
+### Protals
 :::tip
 1. overflow:hidden
 2. 父组件z-index值太小
@@ -761,7 +764,7 @@ class App extends React.Component {
 export default App
 
 ```
-#### context
+### context
 
 :::tip
 1. 公共信息（信息，主题）如何传递给每个组件
@@ -833,7 +836,7 @@ export default App
 
 ```
 
-#### 异步组件 
+### 异步组件 
 :::tip
 - import()
 - React.lazy
@@ -864,7 +867,7 @@ class App extends React.Component {
 export default App
 
 ```
-####  性能优化 
+##  性能优化 
 
 > react默认：父组件更新，子组件无条件更新
 
@@ -917,7 +920,7 @@ List.propTypes = {
 ```
 ![React.memo](./assets/image23.png)
 
-### 什么是React高阶组件
+## 什么是React高阶组件
 ::: details (关于组件公共逻辑的抽离)
 1. mixin，已被React弃用
 2. 高阶组件HOC（Hight Order Component）
@@ -972,11 +975,163 @@ export default withMouse(App) // 返回高阶函数
 ```
 ![Render Props](./assets/image25.png)
 
+## Redux
+
+[redux](https://www.redux.org.cn/)
+
+### 基本概念
+- store state
+- action
+- reducer
+
+```js
+import { createStore } from 'redux'
+const store = createStore(todos, ['Use Redux'])
+
+function addTodo(text) {
+  return {
+    type: 'ADD_TODO',
+    text
+  }
+}
+
+store.dispatch(addTodo('Read the docs'))
+store.dispatch(addTodo('Read about the middleware'))
+```
+
+
+### redux 
+
+- 单项数据流
+- dispatch(action)
+- reducer->newState
+- subscibe触发通知 
+
+![react-redu](./assets/5.png)
+
+### react-redux
+
+-  `<Provider>` connect
+- connect
+- mapStateToProps mapDispatchToProps
+
+```jsx
+import { connect } from 'react-redux'
+import { toggleTodo } from '../actions'
+import TodoList from '../components/TodoList'
+
+// 不同类型的 todo 列表
+const getVisibleTodos = (todos, filter) => {
+  switch (filter) {
+    case 'SHOW_ALL':
+      return todos
+    case 'SHOW_COMPLETED':
+      return todos.filter(t => t.completed)
+    case 'SHOW_ACTIVE':
+      return todos.filter(t => !t.completed)
+  }
+}
+
+const mapStateToProps = state => {
+  // state 即 vuex 的总状态，在 reducer/index.js 中定义
+  return {
+    // 根据完成状态，筛选数据
+    todos: getVisibleTodos(state.todos, state.visibilityFilter)
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    // 切换完成状态
+    onTodoClick: id => {
+      dispatch(toggleTodo(id))
+    }
+  }
+}
+
+// connect 高阶组件，将 state 和 dispatch 注入到组件 props 中
+const VisibleTodoList = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TodoList)
+
+export default VisibleTodoList
+```
+
+### 异步action
+
+- redux-thunk
+- redux-promise
+- redux-saga
+
+![异步action](./assets/1.png)
+
+### 中间件
+
+![中间件](./assets/2.png)
+
+![中间件](./assets/3.png)
+
+![中间件](./assets/4.png)
+
+
+## React-touter
+
+- 路由模式（hash、h5 history）
+- 路由配置 （动态路由、懒加载） 
+![alt text](./assets/6.png)
+![alt text](./assets/7.png)
+![路由跳转](./assets/8.png)
+![懒加载](./assets/9.png)
+
+## 函数式编程
+- 一种编程范式，概念比较多
+- 纯函数
+- 不可变值
+
+## 回顾vdom 和diff
+- h函数（返回vnode函数）
+- vnode 数据结构
+- patch 
+
 ### JSX本质是什么
-### shouldComponentUpdate的用途
-### 描述Redux
-### setState是同步还是异步
+- jsx等同于vue模版
+- vue模板不是html
+- jsx模版不是js 
+
+:::tip
+// // 总结
+// React.createElement('div', null, [child1, child2, child3])
+// React.createElement('div', {...}, child1, child2, child3)
+// React.createElement(List, null, child1, child2, '文本节点')
+// // h 函数
+// // 返回 vnode
+// // patch
+
+React.createElement 即h函数，返回vnode
+- 一个参数，可能是组件，也可能是html tag
+- 组件名，首字母必须大写 html tag 是小谢（React规定）
+:::
+![JSX本质是什么](./assets/10.png)
+![Style](./assets/11.png)
+![onClick](./assets/12.png)
+![JSX本质是什么](./assets/13.png)
+
+## React合成事件 
+:::tip
+- 所有事件挂载到document上（react 17 挂载到body上 利于多个React版本并存）
+- event 不是原生的， 是syntheticEvent 合成事件对象
+- 和vue事件不同， 和dom 事件不同
+:::
+![alt text](./assets/14.png)
+
+### 为什么 
+- 更好的兼容性和跨平台
+- 挂载document ， 减少内存消耗，避免频繁解绑。
+- 方便事件的统一管理（事物机制）
 
 
-## 高级特性
-## Redux和React-touter
+## setState主流程
+![setState主流程](./assets/15.png)
+![alt text](./assets/16.png)
+![alt text](./assets/17.png)
