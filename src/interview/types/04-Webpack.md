@@ -455,8 +455,11 @@ module.exports = {
 
 ```
 - 懒加载 
+
 ![懒加载](./assets/23.png)
+
 - 处理jsx
+
 ```js
 {
     "presets": ["@babel/preset-env", "@babel/preset-react"],
@@ -735,7 +738,7 @@ module.exports = {
 - 只有ES6 Module 才能静态分析，实现Tree-Shaking 
 ![alt text](./assets/26.png)
 #### Scope Hosting (多个函数合并为一个函数，函数作用域减少)
- - 代码腿更小
+ - 代码体积更小
  - 创建函数作用域更少
  - 代码可读性更好
 ![alt text](./assets/27.png)
@@ -805,14 +808,70 @@ module.exports = {
 ```
 ![alt text](./assets/30.png)
 
-### babel-runtime和babel-polyfill的区别
+## 总结 
+### webpack 基本配置 
+- 拆分配置和merge 
+- 启动本地服务 proxy
+- 处理ES6 pabel 
+- 处理样式  
+- 处理图片 小的图片使用base64
 
-## 优化打包效率
-## 优化产出代码
-## 构建流程概述
+### webpack 高级配置
+- 多入口
+- 抽离css 文件 MiniCssExtractPlugin 压缩css TerserJSPlugin OptimizeCSSAssetsPlugin
+- 抽离公共代码
+- 拉加载
+- 处理jsx 
+- 处理vue 
 
+### 优化webpack 打包速度 （生产）
+- 优化babel-loader
+- IgnorePlugin 
+- noParse
+- happyPack
+- ParallelUglifyPlugin
+### 优化webpack 打包速度 （不用生产）
+- 自动刷新
+- 热更新
+- DllPlugin
 
-## 前端代码为何要进行构建和打包
+### webpack性能优化 -产出代码 
+- 小图片base64编码 
+- bundle加hash
+- 懒加载
+- 提取公共代码 
+- 使用CDN 加速
+- IgnorePlugin
+- production
+- scope Hosting 
 
-## loader 和plugin 的区别
-## webpack 如何实现懒加载
+## 前端为什么要打包和构建 
+- 体积更小（Tree-Shaking 压缩合并），加载更快
+- 编译高级的语言和语法 （TS ，ES6+， 模块化 ，scss）
+- 兼容性和错误提示（polyfill，postcss，eslint）
+- 同一高效的开发环境
+- 同一的构建流程和产出标准 
+- 集成公司构建规范（提测和上线 ）
+
+## loader 和plugin 
+ - loader 转换器 如less->css
+ - plugin 拓展插件 如HtmlWebpackPlugin 
+
+ ## 常见的loader 和plugin 
+ [loader](https://webpack.js.org/loaders/)
+ [plugin](https://webpack.js.org/plugins/)
+
+ ## babel 和webpack
+
+ - babel- js新语法编译工具，不关心模块化
+ - webpack - 打包构建工具，是多个loader plugin的集合
+
+ ## 如何产出一个lib 
+ - webpack.dll.js
+
+![alt text](./assets/32.png)
+
+## 为何Proxy不能Polyfill 
+- Class 可以用function 模拟 
+- Promise 可以用callback来模拟
+- Proxy 功能用Object.defineProperty 无法模拟
