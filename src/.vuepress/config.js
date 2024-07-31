@@ -43,6 +43,14 @@ const nav = [
         text: '语言基础',
         items: [
           {
+            text: 'harmonyOS',
+            link: '/basic/harmonyOS/'
+          },
+          {
+            text: 'webpack',
+            link: '/basic/webpack/'
+          },
+          {
             text: 'JavaScript',
             link: '/basic/jscriptText/'
           },
@@ -193,6 +201,16 @@ const nav = [
 
 const sidebar = {
   '/basic/': [
+    {
+      title: 'harmonyOS',
+      collapsable: false,
+      children: genSidebarConfig('basic/harmonyOS', siderBarOptions)
+    },
+    {
+      title: 'webpack',
+      collapsable: false,
+      children: genSidebarConfig('basic/webpack', siderBarOptions)
+    },
     {
       title: 'JavaScript',
       collapsable: false,
