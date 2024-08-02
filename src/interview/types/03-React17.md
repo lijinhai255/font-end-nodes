@@ -1218,5 +1218,300 @@ React.createElement 即h函数，返回vnode
 - React 使用jsx 拥抱js ，Vue使用模板拥抱html
 - React 函数时编程，Vue声明式编程 
 - React更多需要自力更生，Vue 想要的都给了
-吗
+
+## React Hook （16.8新增的API）
+![Reack Hook](./assets/ho1.png)
+- 函数组件问题
+:::tip
+ 1. 函数组件没有实例 
+ 2. 函数组件没有生命周期 
+ 3. 没有state 和setState ，只能接受props 
+:::
+- class组件问题
+:::tip
+ 1. 大型组件很难拆分和重构，很难测试（class组件不容易拆分）
+ 2. 相同的业务逻辑，分散到各个方法中，逻辑混乱
+ 3. 复用逻辑变得复杂 如Mixins Hoc render Prop
+:::
+- React组件更易用函数表达 
+:::tip
+1. react提倡函数时编程，view = fu(props)
+2. 函数更灵活，易拆分，易测试
+3. 函数组件太简单了，需要增强能力 - Hooks
+:::
+### state  Hook
+> 为了让函数组件实现state和setState 
+:::tip
+- 默认函数组件没有state 
+- 函数组件是一个纯函数，执行完即销毁，无法存储state
+- 需要sate Hook， 即把sate 功能“钩”到纯函数中 
+:::
+```jsx
+import React, { useState, useEffect } from 'react'
+
+function FriendStatus({ friendId }) {
+    const [status, setStatus] = useState(false)
+
+    // DidMount 和 DidUpdate
+    useEffect(() => {
+        console.log(`开始监听 ${friendId} 在线状态`)
+
+        // 【特别注意】
+        // 此处并不完全等同于 WillUnMount
+        // props 发生变化，即更新，也会执行结束监听
+        // 准确的说：返回的函数，会在下一次 effect 执行之前，被执行
+        return () => {
+            console.log(`结束监听 ${friendId} 在线状态`)
+        }
+    })
+
+    return <div>
+        好友 {friendId} 在线状态：{status.toString()}
+    </div>
+}
+
+export default FriendStatus
+
+```
+### 为什么会有React Hooks,它解决了什么 
+
+### React Hooks 如何模拟组件生命周期
+:::tip
+- 默认函数组件没有生命周期
+- 函数组件是一个纯函数，执行完即销毁，无法实现生命周期
+- 使用Effect Hook 把生命周期“钩”到纯函数中 （模拟class组件的didMount和didUpdate）
+:::
+### ReactHook有哪些
+- useRef
+```jsx
+import React, { useRef, useEffect } from 'react'
+
+function UseRef() {
+    const btnRef = useRef(null) // 初始值
+
+    // const numRef = useRef(0)
+    // numRef.current
+
+    useEffect(() => {
+        console.log(btnRef.current) // DOM 节点
+    }, [])
+
+    return <div>
+        <button ref={btnRef}>click</button>
+    </div>
+}
+
+export default UseRef
+
+```
+- useContext
+```js
+import React, { useContext } from 'react'
+
+// 主题颜色
+const themes = {
+    light: {
+        foreground: '#000',
+        background: '#eee'
+    },
+    dark: {
+        foreground: '#fff',
+        background: '#222'
+    }
+}
+
+// 创建 Context
+const ThemeContext = React.createContext(themes.light) // 初始值
+
+function ThemeButton() {
+    const theme = useContext(ThemeContext)
+
+    return <button style={{ background: theme.background, color: theme.foreground }}>
+        hello world
+    </button>
+}
+
+function Toolbar() {
+    return <div>
+        <ThemeButton></ThemeButton>
+    </div>
+}
+
+function App() {
+    return <ThemeContext.Provider value={themes.dark}>
+        <Toolbar></Toolbar>
+    </ThemeContext.Provider>
+}
+
+export default App
+
+```
+- useReducer
+```js
+import React, { useReducer } from 'react'
+
+const initialState = { count: 0 }
+
+const reducer = (state, action) => {
+    switch (action.type) {
+        case 'increment':
+            return { count: state.count + 1 }
+        case 'decrement':
+            return { count: state.count - 1 }
+        default:
+            return state
+    }
+}
+
+function App() {
+    // 很像 const [count, setCount] = useState(0)
+    const [state, dispatch] = useReducer(reducer, initialState)
+
+    return <div>
+        count: {state.count}
+        <button onClick={() => dispatch({ type: 'increment' })}>increment</button>
+        <button onClick={() => dispatch({ type: 'decrement' })}>decrement</button>
+    </div>
+}
+
+export default App
+
+```
+- useNemo
+```js
+import React, { useState, memo, useMemo } from 'react'
+
+// 子组件
+// function Child({ userInfo }) {
+//     console.log('Child render...', userInfo)
+
+//     return <div>
+//         <p>This is Child {userInfo.name} {userInfo.age}</p>
+//     </div>
+// }
+// 类似 class PureComponent ，对 props 进行浅层比较
+const Child = memo(({ userInfo }) => {
+    console.log('Child render...', userInfo)
+
+    return <div>
+        <p>This is Child {userInfo.name} {userInfo.age}</p>
+    </div>
+})
+
+// 父组件
+function App() {
+    console.log('Parent render...')
+
+    const [count, setCount] = useState(0)
+    const [name, setName] = useState('双越老师')
+
+    // const userInfo = { name, age: 20 }
+    // 用 useMemo 缓存数据，有依赖
+    const userInfo = useMemo(() => {
+        return { name, age: 21 }
+    }, [name])
+
+    return <div>
+        <p>
+            count is {count}
+            <button onClick={() => setCount(count + 1)}>click</button>
+        </p>
+        <Child userInfo={userInfo}></Child>
+    </div>
+}
+
+export default App
+
+```
+- useCallback
+```jsx
+import React, { useState, memo, useMemo, useCallback } from 'react'
+
+// 子组件，memo 相当于 PureComponent
+const Child = memo(({ userInfo, onChange }) => {
+    console.log('Child render...', userInfo)
+
+    return <div>
+        <p>This is Child {userInfo.name} {userInfo.age}</p>
+        <input onChange={onChange}></input>
+    </div>
+})
+
+// 父组件
+function App() {
+    console.log('Parent render...')
+
+    const [count, setCount] = useState(0)
+    const [name, setName] = useState('双越老师')
+
+    // 用 useMemo 缓存数据
+    const userInfo = useMemo(() => {
+        return { name, age: 21 }
+    }, [name])
+
+    // function onChange(e) {
+    //     console.log(e.target.value)
+    // }
+    // 用 useCallback 缓存函数
+    const onChange = useCallback(e => {
+        console.log(e.target.value)
+    }, [])
+
+    return <div>
+        <p>
+            count is {count}
+            <button onClick={() => setCount(count + 1)}>click</button>
+        </p>
+        <Child userInfo={userInfo} onChange={onChange}></Child>
+    </div>
+}
+
+export default App
+
+```
+### 自定义 Hook
+```js
+import { useState, useEffect } from 'react'
+
+function useMousePosition() {
+    const [x, setX] = useState(0)
+    const [y, setY] = useState(0)
+
+    useEffect(() => {
+        function mouseMoveHandler(event) {
+            setX(event.clientX)
+            setY(event.clientY)
+        }
+
+        // 绑定事件
+        document.body.addEventListener('mousemove', mouseMoveHandler)
+
+        // 解绑事件
+        return () => document.body.removeEventListener('mousemove', mouseMoveHandler)
+    }, [])
+
+    return [x, y]
+}
+
+export default useMousePosition
+
+```
+### React Hooks 性能优化
+- useMemo 
+- useCallback
+### 使用React Hooks 遇到哪些坑 
+- useState 初始化，只初始化一次
+- useEffect 依赖引用类型，会出现死循环
+- useEffect内部，不能修改state  
+### Hooks 相比HOC 和Render Prop 有哪些优点 
+
+### Effect Hook
+### 其他 Hook
+
+### React hooks做组件逻辑复用优点
+- 完全符合hooks原有规则，没有其他要求，易理解记忆
+- 变量作用域和明确
+- 不会产生组件嵌套 
+
+
 

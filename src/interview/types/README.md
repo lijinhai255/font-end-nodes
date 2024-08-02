@@ -2,4 +2,8 @@
 sidebarDepth: 2
 ---
 
-# 笔试分类题
+# 分类题
+
+
+
+![分类提](./assets/sw.png)
