@@ -11,7 +11,7 @@ features:
   details: 按最新的课程内容同步笔记内容，并支持PR，欢迎同学一起贡献
 - title: 每日·壹题
   details: 工作日每天搞定一道大厂前端面试题，一年后再回头，会感谢曾经努力的自己！
-footer: Made by Brian with ❤️
+footer:  ❤️
 auth: true
 ---
 
