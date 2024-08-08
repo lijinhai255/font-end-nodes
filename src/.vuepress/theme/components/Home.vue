@@ -1,7 +1,14 @@
 <template>
-  <main class="home" :aria-labelledby="data.heroText !== null ? 'main-title' : null">
+  <main
+    class="home"
+    :aria-labelledby="data.heroText !== null ? 'main-title' : null"
+  >
     <header class="hero">
-      <img v-if="data.heroImage" :src="$withBase(data.heroImage)" :alt="data.heroAlt || 'hero'">
+      <img
+        v-if="data.heroImage"
+        :src="$withBase(data.heroImage)"
+        :alt="data.heroAlt || 'hero'"
+      />
 
       <h1 v-if="data.heroText !== null" id="main-title">
         {{ data.heroText || $title || 'Hello' }}
@@ -17,7 +24,11 @@
     </header>
 
     <div v-if="data.features && data.features.length" class="features">
-      <div v-for="(feature, index) in data.features" :key="index" class="feature">
+      <div
+        v-for="(feature, index) in data.features"
+        :key="index"
+        class="feature"
+      >
         <h2>{{ feature.title }}</h2>
         <p>{{ feature.details }}</p>
       </div>
@@ -40,11 +51,11 @@ export default {
   components: { NavLink },
 
   computed: {
-    data () {
+    data() {
       return this.$page.frontmatter
     },
 
-    actionLink () {
+    actionLink() {
       return {
         link: this.data.actionLink,
         text: this.data.actionText

@@ -47,6 +47,10 @@ const nav = [
             link: '/basic/harmonyOS/'
           },
           {
+            text: 'Nginx',
+            link: '/basic/NginxTest/'
+          },
+          {
             text: 'webpack',
             link: '/basic/webpack/'
           },
@@ -114,6 +118,11 @@ const sidebar = {
       title: 'harmonyOS',
       collapsable: false,
       children: genSidebarConfig('basic/harmonyOS', siderBarOptions)
+    },
+    {
+      title: 'Nginx',
+      collapsable: false,
+      children: genSidebarConfig('basic/NginxTest', siderBarOptions)
     },
     {
       title: 'webpack',
