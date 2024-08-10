@@ -21,11 +21,11 @@
       <div class="nav-item" v-if="isLogin" @click="quit()">
         {{ userInfo.name }}
       </div>
-      <div class="nav-item" v-else>
+      <!-- <div class="nav-item" v-else>
         <div class="btn login" @click="$store.commit('setCodeShow', true)">
           快速登录
         </div>
-      </div>
+      </div> -->
     </nav>
   </ClientOnly>
 </template>
