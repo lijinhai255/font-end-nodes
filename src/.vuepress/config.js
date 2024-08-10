@@ -43,6 +43,10 @@ const nav = [
         text: '语言基础',
         items: [
           {
+            text: 'CSS',
+            link: '/basic/cssText/'
+          },
+          {
             text: 'harmonyOS',
             link: '/basic/harmonyOS/'
           },
@@ -90,6 +94,29 @@ const nav = [
           {
             text: 'Redis',
             link: '/basic/redis/'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    text: '项目',
+    items: [
+      {
+        text: 'vue组件化开发',
+        items: [
+          {
+            text: 'vue组件化开发',
+            link: '/project/vue-component/'
+          }
+        ]
+      },
+      {
+        text: '项目问题',
+        items: [
+          {
+            text: '项目问题总结',
+            link: '/project/answers/'
           }
         ]
       }
@@ -153,6 +180,11 @@ const sidebar = {
       title: 'mongoDB',
       collapsable: false,
       children: genSidebarConfig('basic/mongo', siderBarOptions)
+    },
+    {
+      title: 'CSS',
+      collapsable: false,
+      children: genSidebarConfig('basic/cssText', siderBarOptions)
     }
   ],
   '/interview/': [
@@ -162,6 +194,21 @@ const sidebar = {
       children: genSidebarConfig('interview/types', siderBarOptions)
       // children: ['interview']
     }
+  ],
+  '/project/': [
+    {
+      title: 'Vue组件化开发',
+      collapsable: false,
+      children: genSidebarConfig('project/vue-component', siderBarOptions)
+      // children: ['interview']
+    },
+    {
+      title: '项目总结',
+      collapsable: false,
+      children: genSidebarConfig('project/answers', siderBarOptions)
+      // children: ['interview']
+    }
+    // /project/answers/
   ],
   '/': [
     {
