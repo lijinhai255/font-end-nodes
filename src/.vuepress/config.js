@@ -85,7 +85,8 @@ const nav = [
         items: [
           {
             text: 'NoSQL',
-            link: '/basic/nosql/'
+            link: '/basic/nosql/',
+            privite: true
           },
           {
             text: 'mongoDB',
@@ -108,6 +109,15 @@ const nav = [
           {
             text: 'vue组件化开发',
             link: '/project/vue-component/'
+          }
+        ]
+      },
+      {
+        text: 'uniapp',
+        items: [
+          {
+            text: 'uniapp',
+            link: '/project/community-miniapp/'
           }
         ]
       },
@@ -200,6 +210,12 @@ const sidebar = {
       title: 'Vue组件化开发',
       collapsable: false,
       children: genSidebarConfig('project/vue-component', siderBarOptions)
+      // children: ['interview']
+    },
+    {
+      title: 'uniapp',
+      collapsable: false,
+      children: genSidebarConfig('project/community-miniapp', siderBarOptions)
       // children: ['interview']
     },
     {

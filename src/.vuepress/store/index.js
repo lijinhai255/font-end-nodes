@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { getRights, getUserBasic } from '@/api/user'
-// import createLogger from 'vuex/dist/logger'
+import createLogger from 'vuex/dist/logger'
 // import WebSocketClient from '@/utils/wsUtils'
 
 Vue.use(Vuex)
@@ -70,6 +70,6 @@ export default new Vuex.Store({
       return result
     }
   },
-  plugins: []
-  // plugins: [createLogger()]
+  // plugins: []
+  plugins: [createLogger()]
 })

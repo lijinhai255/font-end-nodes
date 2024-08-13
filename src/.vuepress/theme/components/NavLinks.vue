@@ -18,14 +18,15 @@
         {{ repoLabel }}
         <OutboundLink />
       </a>
+      {{isLogin }}=isLogin
       <div class="nav-item" v-if="isLogin" @click="quit()">
         {{ userInfo.name }}
       </div>
-      <!-- <div class="nav-item" v-else>
+      <div class="nav-item" v-else>
         <div class="btn login" @click="$store.commit('setCodeShow', true)">
           快速登录
         </div>
-      </div> -->
+      </div>
     </nav>
   </ClientOnly>
 </template>
@@ -49,11 +50,15 @@ export default {
     ...mapState(['userInfo']),
     ...mapGetters(['isLogin']),
     userNav() {
+      console.log( this.$themeLocaleConfig.nav,' this.$themeLocaleConfig.nav',this.$site.themeConfig.nav)
       return this.$themeLocaleConfig.nav || this.$site.themeConfig.nav || []
     },
 
     nav() {
+      console.log(this.$site,'site')
       const { locales } = this.$site
+      console.log(locales,'locales-locales')
+    
       if (locales && Object.keys(locales).length > 1) {
         const currentLink = this.$page.path
         const routes = this.$router.options.routes
@@ -81,12 +86,15 @@ export default {
             return { text, link }
           })
         }
+        // eslint-disable-next-line no-debugger
+        debugger
         return [...this.userNav, languageDropdown]
       }
       return this.userNav
     },
 
     userLinks() {
+      console.log(this.nav,this.$store.state.isLogin ,'this.nav -this.nav ')
       return (this.nav || []).map(link => {
         return Object.assign(resolveNavLinkItem(link), {
           items: (link.items || []).map(resolveNavLinkItem)

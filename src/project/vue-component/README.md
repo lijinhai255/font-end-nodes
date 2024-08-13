@@ -576,3 +576,70 @@ module.exports = fs.readdirSync(root)
 "build": "rollup -c"
 ```
 ## Rollup打包
+:::tip
+- Rollup是一个模块打包器
+- Rollup支持Tree-shaking
+- 打包的结果比Webpack要小
+- 开发框架/组件库的时候使用Rollup更合适
+:::
+### 安装插件
+:::tip
+- Rollup
+- rollup-plugin-terser
+- rollup-plugin-vue@5.1.9
+- vue-template-compiler
+:::
+
+## plop 基于模板创建基本结构
+```js
+module.exports = plop => {
+  plop.setGenerator('component', {
+    description: 'create a custom component',
+    prompts: [
+      {
+        type: 'input',
+        name: 'name',
+        message: 'component name',
+        default: 'MyComponent'
+      }
+    ],
+    actions: [
+      {
+        type: 'add',
+        path: 'packages/{{name}}/src/{{name}}.vue',
+        templateFile: 'plop-template/component/src/component.hbs'
+      },
+      {
+        type: 'add',
+        path: 'packages/{{name}}/__tests__/{{name}}.test.js',
+        templateFile: 'plop-template/component/__tests__/component.test.hbs'
+      },
+      {
+        type: 'add',
+        path: 'packages/{{name}}/stories/{{name}}.stories.js',
+        templateFile: 'plop-template/component/stories/component.stories.hbs'
+      },
+      {
+        type: 'add',
+        path: 'packages/{{name}}/index.js',
+        templateFile: 'plop-template/component/index.hbs'
+      },
+      {
+        type: 'add',
+        path: 'packages/{{name}}/LICENSE',
+        templateFile: 'plop-template/component/LICENSE'
+      },
+      {
+        type: 'add',
+        path: 'packages/{{name}}/package.json',
+        templateFile: 'plop-template/component/package.hbs'
+      },
+      {
+        type: 'add',
+        path: 'packages/{{name}}/README.md',
+        templateFile: 'plop-template/component/README.hbs'
+      }
+    ]
+  })
+}
+```
