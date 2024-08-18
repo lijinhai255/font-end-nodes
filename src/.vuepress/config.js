@@ -121,6 +121,16 @@ const nav = [
           }
         ]
       },
+      // formily
+      {
+        text: 'formily',
+        items: [
+          {
+            text: 'formily',
+            link: '/project/formily/'
+          }
+        ]
+      },
       {
         text: '项目问题',
         items: [
@@ -216,6 +226,12 @@ const sidebar = {
       title: 'uniapp',
       collapsable: false,
       children: genSidebarConfig('project/community-miniapp', siderBarOptions)
+      // children: ['interview']
+    },
+    {
+      title: 'formily',
+      collapsable: false,
+      children: genSidebarConfig('project/formily', siderBarOptions)
       // children: ['interview']
     },
     {
