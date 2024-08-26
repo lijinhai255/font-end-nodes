@@ -18,7 +18,6 @@
         {{ repoLabel }}
         <OutboundLink />
       </a>
-      {{isLogin }}=isLogin
       <div class="nav-item" v-if="isLogin" @click="quit()">
         {{ userInfo.name }}
       </div>
