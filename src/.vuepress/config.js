@@ -113,11 +113,20 @@ const nav = [
         ]
       },
       {
-        text: 'uniapp',
+        text: '泛客户端',
         items: [
           {
             text: 'uniapp',
             link: '/project/community-miniapp/'
+          }
+        ]
+      },
+      {
+        text: '数据可视化',
+        items: [
+          {
+            text: 'echarts',
+            link: '/project/echarts/'
           }
         ]
       },
@@ -226,6 +235,12 @@ const sidebar = {
       title: 'uniapp',
       collapsable: false,
       children: genSidebarConfig('project/community-miniapp', siderBarOptions)
+      // children: ['interview']
+    },
+    {
+      title: 'echarts',
+      collapsable: false,
+      children: genSidebarConfig('project/echarts', siderBarOptions)
       // children: ['interview']
     },
     {
