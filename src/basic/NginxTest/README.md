@@ -56,4 +56,32 @@ git --version
 yum remove git
 
 ```
-## 安装node
+## 前端换包
+
+```js
+进到html目录
+cd /workspace/docker/nginx/data/html
+
+查看目录下文件
+ll
+
+将zhihuigongdi-web目录改名
+sudo  mv 原文件名 新文件名
+
+将上传的文件放到html目录下
+sudo mv /tmp/zhihuigongdi-web  /workspace/docker/nginx/data/html
+
+查看docker容器
+docker ps -a
+
+停掉nginx容器 
+sudo docker stop c0202a0ea868（容器ID）
+
+替换文件
+sudo cp /workspace/docker/nginx/data/html/zhihuigongdi-web
+ c0202a0ea868:/usr/share/nginx/html/zhihuigongdi-web
+
+重启nginx容器
+sudo docker start c0202a0ea868
+
+```
