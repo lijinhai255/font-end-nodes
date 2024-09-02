@@ -1137,6 +1137,44 @@ const textureCube = textureCubeLoader.load([
 scene.background = textureCube;
 scene.environment = textureCube;
 ```
+## 智慧园区
+
+### Error: THREE.GLTFLoader: No DRACOLoader instance provided.
+
+```js
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
+
+export default class City {
+  constructor(scene) {
+    // 载入模型
+    this.scene = scene;
+    this.loader = new GLTFLoader();
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath("./draco/");
+    this.loader.setDRACOLoader(dracoLoader);
+    this.loader.load("./model/city4.glb", (gltf) => {
+      console.log(gltf);
+      scene.add(gltf.scene);
+    });
+  }
+}
+
+```
+
+
+
+### 添加平行光
+
+```js
+
+// 添加平行光
+const light = new THREE.DirectionalLight(0xffffff, 1);
+light.position.set(10, 100, 10);
+scene.add(light);
+
+```
+
 
 ## 着色器 
 
