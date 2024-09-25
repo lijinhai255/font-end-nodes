@@ -1871,3 +1871,58 @@ export default {
 </style>
 
 ```
+
+## 双折线图
+![alt text](./assets/image_line.png)
+
+```vue
+  let option = {
+        color: ["#0C5CFF", "#FF9600", "#FF0327"],
+        tooltip: {
+          trigger: "item",
+        },
+        legend: {
+          data: ["实时位移", "预警线", "报警线"],
+          textStyle: {
+            color: "#E2D5FF",
+            fontSize: 14,
+          },
+          right: 0,
+          top: 0,
+        },
+        xAxis: {
+          type: "category",
+          boundaryGap: false,
+          data: ["10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00"],
+          axisLabel: {
+            color: "#D2DFFF",
+          },
+        },
+        grid: {
+          bottom: "8%",
+          top: "15%",
+          left: 50,
+          right: 10,
+        },
+        yAxis: {
+          type: "value",
+          axisLabel: {
+            color: "#D2DFFF",
+          },
+        },
+        series: [
+          {
+            name: "预警线",
+            data: [100, 200, 202, 345, 500, 600],
+            type: "line",
+            symbolSize: 10,
+          },
+          {
+            name: "报警线",
+            data: [130, 230, 222, 315, 400, 400],
+            type: "line",
+            symbolSize: 10,
+          },
+        ],
+      };
+```
