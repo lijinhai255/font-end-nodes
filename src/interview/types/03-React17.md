@@ -1514,46 +1514,96 @@ export default useMousePosition
 - 不会产生组件嵌套 
 
 
+### useEffect 涉及 react的几个生命周期
+
+`componentDidMount`（组件挂载时）
+
+```jsx
+useEffect(() => {
+  // 组件挂载时执行的副作用
+  console.log('Component did mount');
+
+  // 如果需要，可以返回一个清理函数
+  return () => {
+    console.log('Component will unmount');
+  };
+}, []); // 空数组表示只在组件挂载时执行
+
+```
+
+`componentDidUpdate`（组件更新时）
+
+```jsx
+useEffect(() => {
+  // 组件更新时执行的副作用
+  console.log('Component did update');
+}, [props.value, state.value]); // 依赖项数组，只有这些值发生变化时，副作用才会执行
+
+```
+
+`componentWillUnmount`（组件卸载时）
+
+```jsx
+useEffect(() => {
+  // 挂载或更新时执行的副作用
+
+  return () => {
+    // 清理逻辑，组件卸载时会执行
+    console.log('Component will unmount');
+  };
+}, []); // 空数组确保清理函数只在卸载时执行
+
+```
+
+
 ## React 常用问题30问  
 
 
 ### API高频考题
 
-○高阶组件(H0C)是什么？你在业务中使用过解决了什么问题。
-○什么时候应该使用类组件而不是函数组件？React组件错误捕获怎么做？
-○如何在React中对props应用验证？
-○React中如何创建Refs?创建Refs的方式有什么区别？
-○createContext解决了什么问题？React:父组件如何与子组件通信？子组件如何改变父组件的状态？
-○memo有什么用途，useMemo和memo区别是什么？useCallback和useMemo有什么区别？
-○React新老生命周期的区别是什么？合并老生命周期的理由是什么？
-○React中的状态管理库你如何选择？什么是状态撕裂？
-○在React中什么是Portal?
-○自己实现一个Hooks的关键点在哪里？
-○你去实现React的具体业务的时候TS类型不知道怎么设置你会怎么办？
-○React和其他框架对比优缺点是什么？你们团队选择React的理由是什么？
-○React15/16/17/18都有哪些新变化？useTransition是啥解决了什么？
+- [] 高阶组件(H0C)是什么？你在业务中使用过解决了什么问题。
+- [] 什么时候应该使用类组件而不是函数组件？React组件错误捕获怎么做？
+- [] 如何在React中对props应用验证？
+- [] React中如何创建Refs?创建Refs的方式有什么区别？
+- [] createContext解决了什么问题？React:父组件如何与子组件通信？子组件如何改变父组件的状态？
+
+- [] memo有什么用途，useMemo和memo区别是什么？useCallback和useMemo有什么区别？
+
+    `答:` React中的`memo`是个高阶组件，它用于优化组件的渲染性能。`mome`可以将一个纯函数组件（无状态组件）包装起来，以避免不必要的重新渲染。useMemo专用的hooks，缓存值。useCallback 一般缓存我们的函数。
+
+- [] React新老生命周期的区别是什么？合并老生命周期的理由是什么？
+- [] React中的状态管理库你如何选择？什么是状态撕裂？
+- [] 在React中什么是Portal?
+- [] 自己实现一个Hooks的关键点在哪里？
+- [] 你去实现React的具体业务的时候TS类型不知道怎么设置你会怎么办？
+- [] React和其他框架对比优缺点是什么？你们团队选择React的理由是什么？
+- [] React15/16/17/18都有哪些新变化？useTransition是啥解决了什么？
 2.源码高频考题
-○react整体渲染流程请指述一下？愿，你描述的蛮好。那你能说下双缓存是在哪个阶段设置的么？优缺点是什么？
-○Friber架构原理你能细致描述下么？
-○React Scheduler核心原理React15161718变化都有哪些？Batching在这个阶段里么，解决了什么原理是什么？
-○Hooks为什么不能写在条件判断、函数体里。我现在有业务场景就需要在if里写怎么办呢？
-○更新状态直接在函数组件调用会造成无限渲染，原因是什么。怎么监控Ract无意义渲染，监控的原理是什么？
-○Dom Diff细节请详细描述一下？Vue使用了双指针，React为什么没采用呢？
-○React如何实现人自身的事件系统？什么叫合成事件？
-○React Concurrent Mode是什么？React18是怎么实现的？他和useTransition有联系么？
-○将Vue换成React能提高FPS么？请给出理由
-○Lane是什么？解决了React什么问题。原理是什么？
+- [] react整体渲染流程请指述一下？愿，你描述的蛮好。那你能说下双缓存是在哪个阶段设置的么？优缺点是什么？
+- [] Friber架构原理你能细致描述下么？
+- [] React Scheduler核心原理React15161718变化都有哪些？Batching在这个阶段里么，解决了什么原理是什么？
+
+- [] Hooks为什么不能写在条件判断、函数体里。我现在有业务场景就需要在if里写怎么办呢？
+
+答案：React Hooks 使用一个单向链表来保存组件的状态和副作用，在每次组件渲染仕，React会遍历这个链表，按照定义的顺序依次执行每个Hook对应的状态更新和副作用函数，通过链表的形式，React可以保持Hook的调用的顺序的一致，并赠缺的跟踪每个Hook的状态和更新。
+
+- [] 更新状态直接在函数组件调用会造成无限渲染，原因是什么。怎么监控Ract无意义渲染，监控的原理是什么？
+- [] Dom Diff细节请详细描述一下？Vue使用了双指针，React为什么没采用呢？
+- [] React如何实现人自身的事件系统？什么叫合成事件？
+- [] React Concurrent Mode是什么？React18是怎么实现的？他和useTransition有联系么？
+- [] 将Vue换成React能提高FPS么？请给出理由
+- [] Lane是什么？解决了React什么问题。原理是什么？
 3.手写高频考题
-○React 高频Hooks手写
-○React FierNode链表伪代码
-○React Scheduler涉及到核心微任务、宏任务代码输出结果考题
+- [] React 高频Hooks手写
+- [] React FierNode链表伪代码
+- [] React Scheduler涉及到核心微任务、宏任务代码输出结果考题
 
 4.同构考题
-○Ract的同构开发你是如何部署的？使用Next还是自己开发的？流式渲染是什么有什么好处？
-○React服务端渲染需要进行Hydrate么？哪些版本需要？据我所了解Qwik是去调和的，为什么呢？
-○react同构渲染如果提高性能问题？你是怎么落地的。同构解决了那些性能指标。
-○React进行ServerLess渲染时候项目需要做哪些改变？
+- [] Ract的同构开发你是如何部署的？使用Next还是自己开发的？流式渲染是什么有什么好处？
+- [] React服务端渲染需要进行Hydrate么？哪些版本需要？据我所了解Qwik是去调和的，为什么呢？
+- [] react同构渲染如果提高性能问题？你是怎么落地的。同构解决了那些性能指标。
+- [] React进行ServerLess渲染时候项目需要做哪些改变？
 5.附加题
-○刚才你也提到了可以部署的平台有很多，那么每个平台进行JS冷启动的区别是什么呢？
+- [] 刚才你也提到了可以部署的平台有很多，那么每个平台进行JS冷启动的区别是什么呢？
 6.变态题
-○请问源码scheduler下fork的Scheduler,.js209行实现了什么？参数有几个返回有几个色
+- [] 请问源码scheduler下fork的Scheduler,.js209行实现了什么？参数有几个返回有几个色
