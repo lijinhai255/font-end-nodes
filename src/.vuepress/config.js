@@ -18,7 +18,7 @@ const nav = [
         text: 'web3',
         items: [
           {
-            text: 'web3',
+            text: 'webThree',
             link: '/course/webThree/'
           }
         ]
@@ -165,7 +165,6 @@ const nav = [
       }
     ]
   },
-
   {
     text: '前端面试',
     items: [
@@ -185,7 +184,7 @@ const nav = [
 const sidebar = {
   '/course': [
     {
-      title: 'web3',
+      title: 'webThree',
       collapsable: false,
       children: genSidebarConfig('course/webThree', siderBarOptions)
     }
