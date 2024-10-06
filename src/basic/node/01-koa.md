@@ -205,7 +205,7 @@ app.listen(3004)
 
 运行结果：
 
-```base
+```text
 this is a middleware 1
 this is a middleware 2
 this is a middleware 3

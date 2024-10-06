@@ -93,7 +93,8 @@ export default {
         margin-left: 15px;
         &:hover,
         &:focus {
-          background: darken($color: #4fd89a, $amount: 10);
+          background: color.adjust(#4fd89a, $lightness: -10%);
+
         }
       }
     }
