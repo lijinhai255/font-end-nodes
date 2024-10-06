@@ -20,7 +20,7 @@ sudo yum install -y nginx
 
 ## 操作 Nginx
 1.启动 Nginx
-```test
+```text
 systemctl start nginx
 ```
 2.停止 Nginx

@@ -65,3 +65,15 @@ function render(){
     }
 }
 ```
+
+1. render函数
+2. 执行render
+3. 获取里边的变量text =>targer 记录render()
+4. get key =>render
+
+Vue1 
+text1=>document.getElementById('23').innerText = 12212
+
+vue2/vue3 
+tex1\text2 => render() =>dom diff ==>text
+

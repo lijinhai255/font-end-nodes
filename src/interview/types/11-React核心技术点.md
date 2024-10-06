@@ -150,7 +150,7 @@ export default MyComponent;
 
 总的来说，Fiber 是React内部的一种机构，用于管理组件的渲染，而Concurrent Mode是一种运行模式，它利用Fiber的异步渲染能力，使得React可以在处理多个任务是进行更好的协调
 
-```test
+```text
 1000/60 = 16.67ms  ： 1s 渲染60次  
 
 如何把主线程（webWork）让出来 
