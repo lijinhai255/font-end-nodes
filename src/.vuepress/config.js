@@ -12,6 +12,20 @@ const nav = [
     link: '/'
   },
   {
+    text: '课程',
+    items: [
+      {
+        text: 'web3',
+        items: [
+          {
+            text: 'web3',
+            link: '/course/webThree/'
+          }
+        ]
+      }
+    ]
+  },
+  {
     text: '基础强化',
     items: [
       {
@@ -169,6 +183,13 @@ const nav = [
 ]
 
 const sidebar = {
+  '/course': [
+    {
+      title: 'web3',
+      collapsable: false,
+      children: genSidebarConfig('course/webThree', siderBarOptions)
+    }
+  ],
   '/basic/': [
     {
       title: 'harmonyOS',
