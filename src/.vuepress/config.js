@@ -12,6 +12,20 @@ const nav = [
     link: '/'
   },
   {
+    text: '课程',
+    items: [
+      {
+        text: 'webThree',
+        items: [
+          {
+            text: 'webThree',
+            link: '/course/webThree/'
+          }
+        ]
+      }
+    ]
+  },
+  {
     text: '基础强化',
     items: [
       {
@@ -43,8 +57,16 @@ const nav = [
         text: '语言基础',
         items: [
           {
+            text: 'CSS',
+            link: '/basic/cssText/'
+          },
+          {
             text: 'harmonyOS',
             link: '/basic/harmonyOS/'
+          },
+          {
+            text: 'Nginx',
+            link: '/basic/NginxTest/'
           },
           {
             text: 'webpack',
@@ -77,7 +99,8 @@ const nav = [
         items: [
           {
             text: 'NoSQL',
-            link: '/basic/nosql/'
+            link: '/basic/nosql/',
+            privite: true
           },
           {
             text: 'mongoDB',
@@ -91,98 +114,57 @@ const nav = [
       }
     ]
   },
-  // {
-  //   text: 'DevOps',
-  //   items: [
-  //     {
-  //       text: '效率工具',
-  //       items: [
-  //         {
-  //           text: 'Jenkins',
-  //           link: '/devops/jenkins/'
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       text: '团队协同',
-  //       items: [
-  //         {
-  //           text: 'gitlab',
-  //           link: '/devops/gitlab/'
-  //         },
-  //         {
-  //           text: 'showDoc',
-  //           link: '/devops/showdoc/'
-  //         },
-  //         {
-  //           text: 'DOClever',
-  //           link: '/devops/doclever/'
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       text: '容器化',
-  //       items: [
-  //         {
-  //           text: 'Docker进阶',
-  //           link: '/devops/docker-advance/'
-  //         },
-  //         {
-  //           text: 'Kubernetes',
-  //           link: '/devops/k8s/'
-  //         }
-  //       ]
-  //     }
-  //   ]
-  // },
-  // {
-  //   text: '全端项目',
-  //   items: [
-  //     {
-  //       text: '社区项目',
-  //       items: [
-  //         {
-  //           text: '社区PC',
-  //           link: '/project/community-pc/'
-  //         },
-  //         {
-  //           text: '管理后台',
-  //           link: '/project/community-admin/'
-  //         },
-  //         {
-  //           text: 'WebApp',
-  //           link: '/project/community-webapp/'
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       text: '多平台+跨端',
-  //       items: [
-  //         {
-  //           text: '微信小程序',
-  //           link: '/project/community-miniapp/'
-  //         },
-  //         {
-  //           text: 'Flutter 2.0',
-  //           link: '/project/community-flutter/'
-  //         },
-  //         {
-  //           text: 'Electron桌面端',
-  //           link: '/project/community-electron/'
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       text: 'React世界',
-  //       items: [
-  //         {
-  //           text: 'React',
-  //           link: '/project/react/'
-  //         }
-  //       ]
-  //     }
-  //   ]
-  // },
+  {
+    text: '项目',
+    items: [
+      {
+        text: 'vue组件化开发',
+        items: [
+          {
+            text: 'vue组件化开发',
+            link: '/project/vue-component/'
+          }
+        ]
+      },
+      {
+        text: '泛客户端',
+        items: [
+          {
+            text: 'uniapp',
+            link: '/project/community-miniapp/'
+          }
+        ]
+      },
+      {
+        text: '数据可视化',
+        items: [
+          {
+            text: 'echarts',
+            link: '/project/echarts/'
+          }
+        ]
+      },
+      // formily
+      {
+        text: 'formily',
+        items: [
+          {
+            text: 'formily',
+            link: '/project/formily/'
+          }
+        ]
+      },
+      {
+        text: '项目问题',
+        items: [
+          {
+            text: '项目问题总结',
+            link: '/project/answers/'
+          }
+        ]
+      }
+    ]
+  },
   {
     text: '前端面试',
     items: [
@@ -200,11 +182,23 @@ const nav = [
 ]
 
 const sidebar = {
+  '/course': [
+    {
+      title: 'webThree',
+      collapsable: false,
+      children: genSidebarConfig('course/webThree', siderBarOptions)
+    }
+  ],
   '/basic/': [
     {
       title: 'harmonyOS',
       collapsable: false,
       children: genSidebarConfig('basic/harmonyOS', siderBarOptions)
+    },
+    {
+      title: 'Nginx',
+      collapsable: false,
+      children: genSidebarConfig('basic/NginxTest', siderBarOptions)
     },
     {
       title: 'webpack',
@@ -235,68 +229,11 @@ const sidebar = {
       title: 'mongoDB',
       collapsable: false,
       children: genSidebarConfig('basic/mongo', siderBarOptions)
-    }
-  ],
-  '/project/': [
-    {
-      title: '社区PC',
-      collapsable: false,
-      children: genSidebarConfig('project/community-pc', siderBarOptions)
     },
     {
-      title: '社区管理后台',
+      title: 'CSS',
       collapsable: false,
-      children: genSidebarConfig('project/community-admin', siderBarOptions)
-    },
-    {
-      title: '社区WebApp',
-      collapsable: false,
-      children: genSidebarConfig('project/community-webapp', siderBarOptions)
-    },
-    {
-      title: '小程序',
-      collapsable: false,
-      children: genSidebarConfig('project/community-miniapp', siderBarOptions)
-    },
-    {
-      title: 'Flutter 2.0',
-      collapsable: false,
-      children: genSidebarConfig('project/community-flutter', siderBarOptions)
-    },
-    {
-      title: 'Electron桌面端',
-      collapsable: false,
-      children: genSidebarConfig('project/community-electron', siderBarOptions)
-    },
-    {
-      title: 'React世界',
-      collapsable: false,
-      children: ['react/']
-    }
-  ],
-  '/course/': [
-    {
-      title: '参与贡献',
-      collapsable: false,
-      children: genSidebarConfig('course/notes', siderBarOptions)
-    },
-    {
-      title: '项目说明',
-      collapsable: false,
-      children: genSidebarConfig('course/vuepress', siderBarOptions)
-    },
-    {
-      title: 'Pull Request教程',
-      collapsable: false,
-      children: genSidebarConfig('course/pull-request', siderBarOptions)
-    }
-  ],
-  '/about/': [
-    {
-      title: '关于我们',
-      collapsable: false,
-      // children: ['', '01-课程评价', '02-招募英才']
-      children: genSidebarConfig('about', { ...siderBarOptions, hasSub: false })
+      children: genSidebarConfig('basic/cssText', siderBarOptions)
     }
   ],
   '/interview/': [
@@ -304,7 +241,41 @@ const sidebar = {
       title: '前端面试',
       collapsable: false,
       children: genSidebarConfig('interview/types', siderBarOptions)
+      // children: ['interview']
     }
+  ],
+  '/project/': [
+    {
+      title: 'Vue组件化开发',
+      collapsable: false,
+      children: genSidebarConfig('project/vue-component', siderBarOptions)
+      // children: ['interview']
+    },
+    {
+      title: 'uniapp',
+      collapsable: false,
+      children: genSidebarConfig('project/community-miniapp', siderBarOptions)
+      // children: ['interview']
+    },
+    {
+      title: 'echarts',
+      collapsable: false,
+      children: genSidebarConfig('project/echarts', siderBarOptions)
+      // children: ['interview']
+    },
+    {
+      title: 'formily',
+      collapsable: false,
+      children: genSidebarConfig('project/formily', siderBarOptions)
+      // children: ['interview']
+    },
+    {
+      title: '项目总结',
+      collapsable: false,
+      children: genSidebarConfig('project/answers', siderBarOptions)
+      // children: ['interview']
+    }
+    // /project/answers/
   ],
   '/': [
     {
