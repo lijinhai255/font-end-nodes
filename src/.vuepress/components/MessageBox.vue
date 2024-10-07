@@ -46,6 +46,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use 'sass:color';
+
 .mask {
   position: fixed;
   left: 0;
@@ -93,8 +95,7 @@ export default {
         margin-left: 15px;
         &:hover,
         &:focus {
-          background: color.adjust(#4fd89a, $lightness: -10%);
-
+          background: adjust-color(#4fd89a, $lightness: -10%);
         }
       }
     }

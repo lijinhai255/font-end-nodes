@@ -1,3 +1,7 @@
+---
+sidebarDepth: 10
+---
+
 # React17与React18的更新变化
 
 ## React17 更新

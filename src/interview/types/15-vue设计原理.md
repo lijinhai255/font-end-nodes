@@ -1,3 +1,7 @@
+---
+sidebarDepth: 10
+---
+
 # vue 设计原理
 
 MVVM 

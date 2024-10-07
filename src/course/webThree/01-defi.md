@@ -1,3 +1,7 @@
+---
+sidebarDepth: 2
+---
+
 # Defi
 
 ## Defi基础概念

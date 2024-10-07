@@ -1,3 +1,6 @@
+---
+sidebarDepth: 2
+---
 
 # web3
 

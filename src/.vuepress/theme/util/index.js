@@ -8,10 +8,16 @@ export function normalize(path) {
 }
 
 export function getHash(path) {
+  if (!path) {
+    return '' // Return an empty string if the path is undefined or null
+  }
+
   const match = path.match(hashRE)
   if (match) {
-    return match[0]
+    return match[0] // Return the matched hash
   }
+
+  return '' // Return an empty string if no match is found
 }
 
 export function isExternal(path) {
