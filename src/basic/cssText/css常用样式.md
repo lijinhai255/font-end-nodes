@@ -1,3 +1,6 @@
+---
+sidebarDepth: 2
+---
 
 # css常用样式
 

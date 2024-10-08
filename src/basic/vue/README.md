@@ -1,3 +1,6 @@
+---
+sidebarDepth: 2
+---
 
 vue页面
 

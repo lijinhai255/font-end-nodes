@@ -1,3 +1,6 @@
+---
+sidebarDepth: 2
+---
 
 # CSS选择器以及优先级
 
