@@ -12,6 +12,15 @@ const nav = [
     link: '/'
   },
   {
+    text: '课程',
+    items: [
+      {
+        text: 'webThree',
+        link: '/course/webThree'
+      }
+    ]
+  },
+  {
     text: '基础强化',
     items: [
       {
@@ -192,6 +201,24 @@ const nav = [
           {
             text: '分类笔试题',
             link: '/interview/types/'
+          },
+          {
+            text: '每日算法',
+            items: [
+              {
+                text: '每日算法',
+                link: '/interview/algorithm/'
+              }
+            ]
+          },
+          {
+            text: '项目题',
+            items: [
+              {
+                text: '项目题',
+                link: '/interview/project/'
+              }
+            ]
           }
         ]
       }
@@ -276,20 +303,25 @@ const sidebar = {
   ],
   '/course/': [
     {
-      title: '参与贡献',
+      title: 'webThree',
       collapsable: false,
-      children: genSidebarConfig('course/notes', siderBarOptions)
-    },
-    {
-      title: '项目说明',
-      collapsable: false,
-      children: genSidebarConfig('course/vuepress', siderBarOptions)
-    },
-    {
-      title: 'Pull Request教程',
-      collapsable: false,
-      children: genSidebarConfig('course/pull-request', siderBarOptions)
+      children: genSidebarConfig('course/webThree', siderBarOptions)
     }
+    // {
+    //   title: '参与贡献',
+    //   collapsable: false,
+    //   children: genSidebarConfig('course/notes', siderBarOptions)
+    // },
+    // {
+    //   title: '项目说明',
+    //   collapsable: false,
+    //   children: genSidebarConfig('course/vuepress', siderBarOptions)
+    // },
+    // {
+    //   title: 'Pull Request教程',
+    //   collapsable: false,
+    //   children: genSidebarConfig('course/pull-request', siderBarOptions)
+    // }
   ],
   '/about/': [
     {
@@ -304,6 +336,16 @@ const sidebar = {
       title: '前端面试',
       collapsable: false,
       children: genSidebarConfig('interview/types', siderBarOptions)
+    },
+    {
+      title: '每日算法',
+      collapsable: false,
+      children: genSidebarConfig('interview/algorithm', siderBarOptions)
+    },
+    {
+      title: '项目题',
+      collapsable: false,
+      children: genSidebarConfig('interview/project', siderBarOptions)
     }
   ],
   '/': [
