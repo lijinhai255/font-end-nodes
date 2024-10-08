@@ -11,6 +11,15 @@ const nav = [
     text: '首页',
     link: '/'
   },
+  // {
+  //   text: '项目',
+  //   items: [
+  //     {
+  //       text: '小程序',
+  //       link: '/projects/community-miniapp'
+  //     }
+  //   ]
+  // },
   {
     text: '课程',
     items: [
@@ -264,36 +273,36 @@ const sidebar = {
       children: genSidebarConfig('basic/mongo', siderBarOptions)
     }
   ],
-  '/project/': [
+  '/projects/': [
     {
       title: '社区PC',
       collapsable: false,
-      children: genSidebarConfig('project/community-pc', siderBarOptions)
+      children: genSidebarConfig('projects/community-pc', siderBarOptions)
     },
     {
       title: '社区管理后台',
       collapsable: false,
-      children: genSidebarConfig('project/community-admin', siderBarOptions)
+      children: genSidebarConfig('projects/community-admin', siderBarOptions)
     },
     {
       title: '社区WebApp',
       collapsable: false,
-      children: genSidebarConfig('project/community-webapp', siderBarOptions)
+      children: genSidebarConfig('projects/community-webapp', siderBarOptions)
     },
     {
       title: '小程序',
       collapsable: false,
-      children: genSidebarConfig('project/community-miniapp', siderBarOptions)
+      children: genSidebarConfig('projects/community-miniapp', siderBarOptions)
     },
     {
       title: 'Flutter 2.0',
       collapsable: false,
-      children: genSidebarConfig('project/community-flutter', siderBarOptions)
+      children: genSidebarConfig('projects/community-flutter', siderBarOptions)
     },
     {
       title: 'Electron桌面端',
       collapsable: false,
-      children: genSidebarConfig('project/community-electron', siderBarOptions)
+      children: genSidebarConfig('projects/community-electron', siderBarOptions)
     },
     {
       title: 'React世界',
@@ -307,6 +316,7 @@ const sidebar = {
       collapsable: false,
       children: genSidebarConfig('course/webThree', siderBarOptions)
     }
+
     // {
     //   title: '参与贡献',
     //   collapsable: false,

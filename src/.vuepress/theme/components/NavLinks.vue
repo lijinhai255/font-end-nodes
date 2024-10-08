@@ -49,15 +49,19 @@ export default {
     ...mapState(['userInfo']),
     ...mapGetters(['isLogin']),
     userNav() {
-      console.log( this.$themeLocaleConfig.nav,' this.$themeLocaleConfig.nav',this.$site.themeConfig.nav)
+      // console.log(
+      //   this.$themeLocaleConfig.nav,
+      //   ' this.$themeLocaleConfig.nav',
+      //   this.$site.themeConfig.nav
+      // )
       return this.$themeLocaleConfig.nav || this.$site.themeConfig.nav || []
     },
 
     nav() {
-      console.log(this.$site,'site')
+      // console.log(this.$site, 'site')
       const { locales } = this.$site
-      console.log(locales,'locales-locales')
-    
+      // console.log(locales, 'locales-locales')
+
       if (locales && Object.keys(locales).length > 1) {
         const currentLink = this.$page.path
         const routes = this.$router.options.routes
@@ -93,7 +97,7 @@ export default {
     },
 
     userLinks() {
-      console.log(this.nav,this.$store.state.isLogin ,'this.nav -this.nav ')
+      // console.log(this.nav, this.$store.state.isLogin, 'this.nav -this.nav ')
       return (this.nav || []).map(link => {
         return Object.assign(resolveNavLinkItem(link), {
           items: (link.items || []).map(resolveNavLinkItem)
