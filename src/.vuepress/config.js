@@ -210,16 +210,16 @@ const nav = [
                 link: '/interview/algorithm/'
               }
             ]
-          },
-          {
-            text: '项目题',
-            items: [
-              {
-                text: '项目题',
-                link: '/interview/project/'
-              }
-            ]
           }
+          // {
+          //   text: '项目题',
+          //   items: [
+          //     {
+          //       text: '项目题',
+          //       link: '/interview/project/'
+          //     }
+          //   ]
+          // }
         ]
       }
     ]
@@ -341,12 +341,12 @@ const sidebar = {
       title: '每日算法',
       collapsable: false,
       children: genSidebarConfig('interview/algorithm', siderBarOptions)
-    },
-    {
-      title: '项目题',
-      collapsable: false,
-      children: genSidebarConfig('interview/project', siderBarOptions)
     }
+    // {
+    //   title: '项目题',
+    //   collapsable: false,
+    //   children: genSidebarConfig('interview/project', siderBarOptions)
+    // }
   ],
   '/': [
     {
