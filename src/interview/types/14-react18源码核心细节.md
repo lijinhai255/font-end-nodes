@@ -72,12 +72,13 @@ react内部三个阶段
 - render 阶段（beginWork completeWork）入口函数 wookLoop
 - commit 阶段（commitWork）
 
-commit阶段三个子阶段
+`commit`阶段三个子阶段
 
-- beforeMulation阶段
-- mulation 阶段
-- layout 阶段 
+- beforeMulation阶段 
+- mulation 阶段(突变阶段 意味着元素属性变化等)
+- layout 阶段  （useLayout等Hook发生的阶段）
+- workInProgess 和current 切换就发生在mutation->layout之间
 
-当前commit 阶段要执行的任务
+当前`commit` 阶段要执行的任务
 - fiber树切换
 - 执行Fiacement 对应的操作
