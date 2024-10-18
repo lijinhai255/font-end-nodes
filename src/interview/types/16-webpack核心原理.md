@@ -97,3 +97,59 @@ Webpack会创建模块对象，并记录每个模块的依赖关系。在我们�
 
 在这个bundle.js文件中，Webpack会把所有模块（index.js和util.js）打包成一个文件，并生成适当的代码来处理这些模块之间的依赖。
 ```
+
+
+## 自定义babel
+
+```js
+const path = require("path");
+const ConsoleLogOnBuildWebpackPlugin = require("./plugins/ConsoleLogOnBuildWebpackPlugin");
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: path.resolve(__dirname, "./loader/babel-index.js"),
+          options: {
+            presets: [["@babel/preset-env", { targets: "defaults" }]],
+          },
+        },
+      },
+    ],
+  },
+  plugins: [new ConsoleLogOnBuildWebpackPlugin()],
+};
+
+```
+
+```js
+const babel = require("@babel/core");
+const acorn = require("acorn");
+const MagicString = require("magic-string");
+const walk = require("acorn-walk");
+
+module.exports = function(content) {
+  // 使用 acorn 解析时添加 sourceType: 'module'
+  const ast = acorn.parse(content, {
+    sourceType: "module", // 允许解析 ES6 模块语法
+    ecmaVersion: 2020, // 指定 ES 版本
+  });
+
+  const code = new MagicString(content);
+
+  // 使用 acorn-walk 遍历 AST
+  walk.simple(ast, {
+    VariableDeclaration(node) {
+      const { start } = node;
+      console.log(start, start + node.kind.length, "VariableDeclaration");
+      code.overwrite(start, start + node.kind.length, "var");
+    },
+  });
+  return code.toString();
+};
+
+```
+
+## 手写webpack
