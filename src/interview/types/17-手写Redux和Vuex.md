@@ -61,6 +61,107 @@ middleware -> IO functor (解决异步操作的各种问题。)
 可以直接获取这个store。它的原理其实是通过React中的Context来实现的。它⼤致的核⼼
 代码如下：
 
+> createStore
+
+```html
+ <script type="module">
+      import { createStore } from './redux/index.js';
+      import reducer from './reducer.js';
+      let initState = {
+        count: 0,
+      };
+      const store = createStore(reducer, initState);
+      store.subscribe(() => {
+        const state = store.getState();
+        console.log('🐻', state.count);
+      });
+      store.dispatch({
+        type: 'INCREMENT',
+      });
+      // store.dispatch({
+      //   type: 'DECREMENT',
+      // });
+    </script>
+```
+
 ```js
+export default function createStore(reducer, initState) {
+  let state = initState;
+  let listeners = [];
+  function subscribe(listener) {
+    listeners.push(listener);
+  }
+  function getState() {
+    return state;
+  }
+  function dispatch(action) {
+    state = reducer(state, action);
+    for (let i = 0; i < listeners.length; i++) {
+      const listener = listeners[i];
+      listener();
+    }
+  }
+  return {
+    subscribe,
+    dispatch,
+    getState,
+  };
+}
+
+```
+
+> reducer
+
+```js
+export default function reducer(state, action) {
+  switch (action.type) {
+    case 'INCREMENT':
+      console.log('INCREMENT: ');
+      return {
+        ...state,
+        count: state.count + 1,
+      };
+    case 'DECREMENT':
+      return {
+        ...state,
+        count: state.count - 1,
+      };
+    default:
+      return state;
+  }
+}
+
+```
+
+> combineReducers
+
+```text
+ //合并reducers
+      const reducer = combineReducers({
+        counter: counterReducer,
+        info: infoReducer,
+      });
+```
+
+```js
+//只要你想执行reducer必须要遍历全部的reducers文件夹中的内容
+export default function combineReducers(reducers) {
+  // counter info
+  const reducerKeys = Object.keys(reducers);
+  return function combinaction(state = {}, action) {
+    const nextState = {};
+    for (let i = 0; i < reducerKeys.length; i++) {
+      const key = reducerKeys[i];
+      //取到了对应reducers中的具体的js函数
+      const reducer = reducers[key];
+      //找到未更改前的state
+      const previousStateForkey = state[key];
+      const nextStateForkey = reducer(previousStateForkey, action);
+      //外部的大对象中的counter == 新的状态
+      nextState[key] = nextStateForkey;
+    }
+    return nextState;
+  };
+}
 
 ```
