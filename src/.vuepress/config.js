@@ -301,6 +301,11 @@ const sidebar = {
       children: genSidebarConfig('projects/community-electron', siderBarOptions)
     },
     {
+      title: '问题总计',
+      collapsable: false,
+      children: genSidebarConfig('projects/answers', siderBarOptions)
+    },
+    {
       title: 'React世界',
       collapsable: false,
       children: ['react/']
@@ -326,14 +331,6 @@ const sidebar = {
       title: 'Pull Request教程',
       collapsable: false,
       children: genSidebarConfig('course/pull-request', siderBarOptions)
-    }
-  ],
-  '/about/': [
-    {
-      title: '关于我们',
-      collapsable: false,
-      // children: ['', '01-课程评价', '02-招募英才']
-      children: genSidebarConfig('about', { ...siderBarOptions, hasSub: false })
     }
   ],
   '/interview/': [
