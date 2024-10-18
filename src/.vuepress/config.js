@@ -313,11 +313,6 @@ const sidebar = {
   ],
   '/course/': [
     {
-      title: 'webThree',
-      collapsable: false,
-      children: genSidebarConfig('course/webthree', siderBarOptions)
-    },
-    {
       title: '参与贡献',
       collapsable: false,
       children: genSidebarConfig('course/notes', siderBarOptions)

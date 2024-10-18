@@ -9,8 +9,10 @@ sidebarDepth: 10
 3. 范畴论将世界抽象为对象和对象之间的联系，Redux将所有事件抽象为action。
 4. Container 中含有 value 和 map 两个属性，⽽修改 value 的⽅法只有 map，在操作完value 后将新值放回 Container 中。
 
+> // 如何操作或修改 value 由 f 给出。
+
 ```js
-// 如何操作或修改 value 由 f 给出。
+
 store -> container
 currentState -> __value
 action -> f
@@ -22,10 +24,15 @@ middleware -> IO functor (解决异步操作的各种问题。)
 
 > reducer是⼀个纯函数，它可以查看之前的状态，执⾏⼀个action并且返回⼀个新的状态。
 
+![alt text](./assets/reducer.png)
+![alt text](./assets/redux.png)
+
 这从 store 的创建语句 enhancer(createStore)(reducer, preloadedState) 可以很明显的得出。⽽修改 store 中的 currentState 的唯⼀⽅法是使⽤ currentReducer，并且currentState 在修改完后将新值依然存放在 store 内。
 
 
-## 如何修改 currentState 是根据⽤户操作 action 。
+## 如何修改 currentState 是根据⽤户操作 action
+
+![alt text](./assets/action.png)
 
 1. applyMiddlewar.js 使⽤⾃定义的 middleware 来扩展 Redux
 2. bindActionCreators.js 把 action creators 转成拥有同名 keys 的对象,使⽤时可以直接调⽤ 
