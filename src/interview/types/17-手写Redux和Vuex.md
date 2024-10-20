@@ -165,3 +165,164 @@ export default function combineReducers(reducers) {
 }
 
 ```
+
+> replaceReducer
+
+```js
+ function replaceReducer(nextReducer) {
+    reducer = nextReducer;
+    //重新去替换了reducer
+    dispatch({ type: Symbol() });
+  }
+```
+
+> redux 中间件 重写dispatch 
+
+### [compose.js](https://chatgpt.com/c/67130cf0-1edc-800c-a144-a83933bb8d14)
+
+```js
+export default function compose(...funcs) {
+  if (funcs.length === 0) {
+    return (arg) => arg;
+  }
+  if (funcs.length === 1) {
+    return funcs[0];
+  }
+  return funcs.reduce(
+    (a, b) =>
+      (...args) =>
+        a(b(...args))
+  );
+}
+
+```
+
+> applyMiddleWare
+
+```js
+import compose from './compose.js';
+const applyMiddleware = function (...middlewares) {
+  return function (oldCreateStore) {
+    //新的createStore
+    return function (reducer, initState) {
+      const store = oldCreateStore(reducer, initState);
+      const simpleStore = { getState: store.getState };
+      const chain = middlewares.map((middleware) => middleware(simpleStore));
+      const dispatch = compose(...chain)(store.dispatch);
+      return {
+        ...store,
+        dispatch,
+      };
+    };
+  };
+};
+export default applyMiddleware;
+
+```
+
+## Vuex 
+
+
+```js
+import Vue from 'vue';
+import Vuex from '@/store/ydvuex';
+
+Vue.use(Vuex);
+
+export default new Vuex.Store({
+  state: {
+    counter: 0,
+  },
+  getters: {
+    doubleCounter(state) {
+      return state.counter * 2;
+    },
+  },
+  mutations: {
+    add(state) {
+      state.counter += 1;
+    },
+  },
+  actions: {
+    add({ commit }) {
+      setTimeout(() => {
+        commit('add');
+      }, 500);
+    },
+  },
+  modules: {
+  },
+});
+
+```
+
+```js
+/* eslint-disable no-underscore-dangle */
+
+let Vue;
+class Store {
+  constructor(options) {
+    const { getters, state, mutations, actions } = options;
+    this._mutations = mutations;
+    this._actions = actions;
+    if (getters) {
+      this.handleGetters(getters);
+    }
+    this._vm = new Vue({
+      data: {
+        $$state: state,
+      },
+    });
+    this.commit = this.commit.bind(this);
+    this.dispatch = this.dispatch.bind(this);
+  }
+
+  get state() {
+    return this._vm._data.$$state;
+  }
+
+  // mutations == redux reducer
+  commit(type, payload) {
+    const entry = this._mutations[type];
+    if (entry) {
+      entry(this.state, payload);
+    }
+  }
+
+  dispatch(type, payload) {
+    const entry = this._actions[type];
+    if (entry) {
+      entry(this, payload);
+    }
+  }
+
+  handleGetters(getters) {
+    this.getters = {};
+    Object.keys(getters).forEach((key) => {
+      Object.defineProperty(this.getters, key, {
+        get: () => getters[key](this.state),
+      });
+    });
+  }
+}
+function install(_Vue) {
+  Vue = _Vue;
+  Vue.mixin({
+    beforeCreate() {
+      if (this.$options.store) {
+        Vue.prototype.$store = this.$options.store;
+      }
+    },
+  });
+}
+export default {
+  Store,
+  install,
+};
+
+```
+
+
+
+TypeScript + React + Node.js + CSS Next + Webpack5 + CI/CD + SDK
+性能指标监控 + Recoil + cli + lowcode + Jest + majestic + msw

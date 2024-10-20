@@ -2,7 +2,8 @@
 sidebarDepth: 2
 ---
 
-# web3
+# webThree
 
-[difi](./01-defi.md)
+[difi](./01.defi.md)
+[tbt](./04.bth.md)
 
