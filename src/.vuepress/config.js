@@ -363,7 +363,7 @@ module.exports = {
   /**
    * Ref：https://v1.vuepress.vuejs.org/config/#title
    */
-  title: '大前端 - 前端高级进阶',
+  title: '前端总结',
   /**
    * Ref：https://v1.vuepress.vuejs.org/config/#description
    */
