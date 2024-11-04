@@ -31,7 +31,7 @@
     "prettier": "^2.8.8",
     "rimraf": "^3.0.2",
     "sass-loader": "^10.2.0",
-    "vuepress": "^1.8.2",
+    "vuepress": "^1.9.10",
     "vuepress-plugin-smooth-scroll": "0.0.10"
   },
   "dependencies": {
