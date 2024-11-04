@@ -3,8 +3,11 @@ sidebarDepth: 10
 ---
 
 # Vue组件化开发 (Vue2.0)
+
 ## 组件边界处理API概述
+
 ### $root
+
 **main.js**
 ```js
 import Vue from 'vue'
@@ -354,6 +357,7 @@ npm install -g @vue/cli-service-global
 ```
 
 ## 组件开发
+
 ### 组件分类
 
 :::tip
@@ -576,6 +580,7 @@ module.exports = fs.readdirSync(root)
 "build": "rollup -c"
 ```
 ## Rollup打包
+
 :::tip
 - Rollup是一个模块打包器
 - Rollup支持Tree-shaking
