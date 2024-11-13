@@ -35,6 +35,7 @@ sidebarDepth: 10
 ![alt text](./assets/Reconciler.png)
 
 `React 17` 废弃了React16中处理优先级采用的是`expirationTime`模型。用了Lane 
+
 > `expirationTime` 模型使用了 expirationTime （一个时间长度）来描述任务的优先级；而`lane模型`则使用`二进制数来表示任务的优先级`
 
 `lane模型`提供了一个新的优先级排列思路，相对于`expirationTime`来说，它对优先级的处理会更细腻，能够覆盖更多的边界条件。
@@ -77,7 +78,7 @@ Concurrent Mode的实现涉及到以下几个方面：
 
 。Concurrent Mode引入了异步渲染的概念，即将渲染任务分割为多个小任务，并使用调度器(Scheduler)来优先处理用户交互和高优先级任务。
 
-。异步渲染使得R©act能够以递增的方式对应用进行更新，并在每个更新阶段中尽快对用户提供反馈。
+。异步渲染使得React能够以递增的方式对应用进行更新，并在每个更新阶段中尽快对用户提供反馈。
 
 2.调度器(Scheduler):
 
