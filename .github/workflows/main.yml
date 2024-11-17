@@ -2,7 +2,7 @@ name: '博客搭建'
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   workflow_dispatch:
 
 env:
