@@ -1,52 +1,45 @@
 name: '博客搭建'
-
 on:
   push:
     branches: [main]
+  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-env:
-  NODE_VERSION: '14.x'
-
 jobs:
-  setup:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v1
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version: '14.x'
 
-      - name: Cache Node.js dependencies
-        uses: actions/cache@v3
+      # Caching dependencies to speed up workflows. (GitHub will remove any cache entries that have not been accessed in over 7 days.)
+      - name: Cache node modules
+        uses: actions/cache@v1
+        id: cache
         with:
-          path: ~/.npm
+          path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       - name: Install Dependencies
-        run: npm ci
+        run: npm i
 
-  build:
-    needs: setup
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Generate VuePress pages
+      # Vuepress Build.
+      - name: Generates Pages
         run: npm run build
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
       - name: Deploy to GitHub Pages
-        uses: crazy-max/ghaction-github-pages@v5
+        uses: crazy-max/ghaction-github-pages@v4
         with:
+          # 部署到 gh-pages 分支
           target_branch: gh-pages
+          # 部署目录为 VuePress 的默认输出目录
           build_dir: src/.vuepress/dist
         env:
+          # @see https://docs.github.com/cn/actions/reference/authentication-in-a-workflow#about-the-github_token-secret
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
