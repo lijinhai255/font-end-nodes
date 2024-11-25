@@ -1209,9 +1209,10 @@ React.createElement 即h函数，返回vnode
 - 合理使用immutable.js
 - webpack 性能优护
 - 前端通用的性能优化，图片懒加载
-- 使用ssr 
+- 使用ssr
 
 ## React 和Vue 区别 
+
 - 都支持组件化
 - 都是数据驱动视图
 - 都使用vdom 操作DOM
@@ -1220,6 +1221,7 @@ React.createElement 即h函数，返回vnode
 - React更多需要自力更生，Vue 想要的都给了
 
 ## React Hook （16.8新增的API）
+
 ![Reack Hook](./assets/ho1.png)
 - 函数组件问题
 :::tip
