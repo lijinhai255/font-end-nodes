@@ -1,6 +1,6 @@
 ---
 sidebar: auto
-auth: true
+
 ---
 
 # 更新记录

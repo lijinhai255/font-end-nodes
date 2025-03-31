@@ -1,6 +1,6 @@
 ---
 sidebarDepth: 2
-auth: true
+
 ---
 # CSS处理
 ## 样式处理

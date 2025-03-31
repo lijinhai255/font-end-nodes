@@ -12,7 +12,7 @@ features:
 - title: 每日·壹题
   details: 工作日每天搞定一道大厂前端面试题，一年后再回头，会感谢曾经努力的自己！
 footer:  ❤️
-auth: true
+
 ---
 
 ## 养成记录笔记的习惯
